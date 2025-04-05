@@ -339,13 +339,31 @@ return [
     ],
     [
         'text' => 'Kategori',
-        'url'  => 'admin/categories',
         'icon' => 'fas fa-tags',
+        'submenu' => [
+            [
+                'text' => 'Semua Kategori',
+                'url'  => 'admin/categories',
+            ],
+            [
+                'text' => 'Tambah Kategori',
+                'url'  => 'admin/categories/create',
+            ],
+        ],
     ],
     [
         'text' => 'Profil Toko',
-        'url'  => 'admin/store_profile',
         'icon' => 'fas fa-store',
+        'submenu' => [
+            [
+                'text' => 'Toko',
+                'url'  => 'admin/store_profile',
+            ],
+            [
+                'text' => 'Edit Toko',
+                'url'  => 'admin/store_profile/edit',
+            ],
+        ],
     ],
     
 
