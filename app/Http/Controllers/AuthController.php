@@ -18,17 +18,25 @@ class AuthController extends Controller
     // Proses login
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
-
+        $credentials = $request->only('email', 'password');
+    
+        // Coba autentikasi user
         if (Auth::attempt($credentials)) {
-            return redirect()->route('dashboard')->with('success', 'Login berhasil!');
+            $user = Auth::user();
+    
+            // Cek apakah emailnya adalah admin
+            if ($user->email === 'admin@bintangserasi.com') {
+                return redirect()->intended('/dashboard');
+            }
+    
+            // Kalau bukan admin, arahkan ke home (beranda user)
+            return redirect()->intended('/');
         }
-
-        return back()->withErrors(['email' => 'Email atau password salah.'])->withInput();
+    
+        // Kalau login gagal
+        return redirect()->back()->with('error', 'Akun tidak ditemukan atau password salah.');
     }
+    
 
     // Logout
     public function logout()

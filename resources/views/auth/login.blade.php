@@ -51,6 +51,11 @@
     </style>
 </head>
 <body>
+@if (session('error'))
+    <div style="color: red; margin-bottom: 10px;">
+        {{ session('error') }}
+    </div>
+@endif
     <div class="container">
         <h2>Login</h2>
         @if(session('success'))

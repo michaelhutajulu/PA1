@@ -303,6 +303,7 @@ return [
         [
             'text' => 'Home',
             'route' => 'dashboard',
+            'icon' => 'fas fa-tachometer-alt',
             'topnav' => true, // Ini akan tampil di navbar atas kiri
         ],
 
@@ -324,8 +325,17 @@ return [
         ],
     [
         'text' => 'Produk',
-        'url'  => 'admin/products',
-        'icon' => 'fas fa-box',
+        'icon' => 'fas fa-boxes',
+        'submenu' => [
+            [
+                'text' => 'Semua Produk',
+                'url'  => 'admin/products',
+            ],
+            [
+                'text' => 'Tambah Produk',
+                'url'  => 'admin/products/create',
+            ],
+        ],
     ],
     [
         'text' => 'Kategori',
@@ -337,6 +347,7 @@ return [
         'url'  => 'admin/store_profile',
         'icon' => 'fas fa-store',
     ],
+    
 
 
     ],

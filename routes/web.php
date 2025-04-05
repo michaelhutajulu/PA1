@@ -5,18 +5,36 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\StoreProfileController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\SaranController;
 
-// Dashboard untuk admin
+
+// ==========================================
+// 🔵 1. HALAMAN BERANDA UNTUK USER (dengan data produk)
+// ==========================================
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::post('/saran', [SaranController::class, 'store'])->name('saran.store');
+Route::get('/produk/{id}', [ProductController::class, 'show'])->name('admin.products.show');
+
+
+// NOTE: Jangan lupa buat HomeController & method index()
+
+// ==========================================
+// 🔒 2. DASHBOARD ADMIN (khusus user login & admin role)
+// ==========================================
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
-})->name('dashboard');
+})->middleware(['auth', 'isadmin'])->name('dashboard');
+// NOTE: Kita akan buat middleware is_admin agar hanya admin yg bisa akses
 
-// Group route untuk admin
-Route::prefix('admin')->middleware('auth')->group(function () {
+// ==========================================
+// 🧑‍💼 3. ADMIN ROUTES (CRUD Produk, Kategori, Store Profile)
+// ==========================================
+Route::prefix('admin')->middleware(['auth', 'isadmin'])->group(function () {
     Route::resource('products', ProductController::class);
     Route::resource('categories', CategoryController::class);
 
-    // Route manual untuk Store Profile (karena hanya ada 1 data)
     Route::get('store_profile', [StoreProfileController::class, 'index'])->name('store_profile.index');
     Route::get('store_profile/create', [StoreProfileController::class, 'create'])->name('store_profile.create');
     Route::post('store_profile', [StoreProfileController::class, 'store'])->name('store_profile.store');
@@ -24,7 +42,9 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::put('store_profile', [StoreProfileController::class, 'update'])->name('store_profile.update');
 });
 
-// Auth Routes
+// ==========================================
+// 🔐 4. AUTH ROUTES
+// ==========================================
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
