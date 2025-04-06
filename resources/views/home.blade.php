@@ -29,25 +29,5 @@
         @endforeach
     </div>
 
-    {{-- Garis pemisah --}}
-    <hr class="my-5">
-
-    {{-- Lokasi dan Form Saran --}}
-    <div class="row text-white" style="background-color: #0d3b66; padding: 40px 20px; border-radius: 15px;">
-        <div class="col-md-6 mb-3">
-            <h4>Lokasi Bintang Serasi</h4>
-            <iframe src="https://www.google.com/maps/embed?pb=..." width="100%" height="300" style="border:0;" allowfullscreen loading="lazy"></iframe>
-        </div>
-        <div class="col-md-6">
-            <h4>Beri Saran untuk Kami</h4>
-            <form action="{{ route('saran.store') }}" method="POST">
-                @csrf
-                <input type="text" name="name" class="form-control mb-2" placeholder="Nama Anda" required>
-                <textarea name="message" class="form-control mb-2" rows="4" placeholder="Saran Anda..." required></textarea>
-                <button class="btn btn-light">Kirim</button>
-            </form>
-        </div>
-    </div>
-
 </div>
 @endsection

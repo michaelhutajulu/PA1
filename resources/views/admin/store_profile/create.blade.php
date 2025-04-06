@@ -2,33 +2,37 @@
 
 @section('content')
 <div class="container">
-    <h1>Tambah Profil Toko</h1>
+    <h1 class="mb-4">Tambah Profil Toko</h1>
 
-    {{-- Pastikan route menggunakan tanda minus (bukan underscore) --}}
     <form action="{{ route('store_profile.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
+    @csrf
 
         <div class="mb-3">
-            <label for="title" class="form-label">Judul Toko</label>
-            <input type="text" name="title" id="title" class="form-control" required>
+            <label for="title" class="form-label">Judul</label>
+            <input type="text" name="title" class="form-control" required>
         </div>
 
         <div class="mb-3">
-            <label for="short_description" class="form-label">Deskripsi Singkat</label>
-            <input type="text" name="short_description" id="short_description" class="form-control" required>
+            <label for="header_description" class="form-label">Deskripsi Judul</label>
+            <textarea name="header_description" class="form-control" rows="3" required></textarea>
         </div>
 
         <div class="mb-3">
-            <label for="full_description" class="form-label">Deskripsi Lengkap</label>
-            <textarea name="full_description" id="full_description" class="form-control" rows="5" required></textarea>
+            <label for="header_image" class="form-label">Gambar Judul</label>
+            <input type="file" name="header_image" class="form-control" accept="image/*">
         </div>
 
         <div class="mb-3">
-            <label for="image" class="form-label">Gambar Toko</label>
-            <input type="file" name="image" id="image" class="form-control">
+            <label for="store_image" class="form-label">Gambar Toko</label>
+            <input type="file" name="store_image" class="form-control" accept="image/*" required>
         </div>
 
-        <button type="submit" class="btn btn-primary">Simpan</button>
+        <div class="mb-3">
+            <label for="main_description" class="form-label">Deskripsi Toko</label>
+            <textarea name="main_description" class="form-control" rows="5" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success">Simpan</button>
     </form>
 </div>
 @endsection

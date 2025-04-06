@@ -301,7 +301,7 @@ return [
     'menu' => [
         // Navbar items:
         [
-            'text' => 'Home',
+            'text' => 'Dashboard',
             'route' => 'dashboard',
             'icon' => 'fas fa-tachometer-alt',
             'topnav' => true, // Ini akan tampil di navbar atas kiri

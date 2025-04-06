@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\StoreProfile;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class StoreProfileController extends Controller
 {
     public function index()
     {
-        $storeProfile = StoreProfile::first();
+        $storeProfile = StoreProfile::latest()->first();
         return view('admin.store_profile.index', compact('storeProfile'));
     }
 
@@ -21,52 +20,63 @@ class StoreProfileController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required', // Sesuai dengan kolom di database
-            'image' => 'image|mimes:jpeg,png,jpg|max:2048',
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'header_description' => 'required|string',
+            'header_image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'store_image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'main_description' => 'required|string',
         ]);
 
-        $storeProfile = new StoreProfile();
-
-        if ($request->hasFile('image')) {
-            $storeProfile->image = $request->file('image')->store('store_profile', 'public');
+        if ($request->hasFile('header_image')) {
+            $data['header_image'] = $request->file('header_image')->store('headers', 'public');
         }
 
-        $storeProfile->title = $request->title;
-        $storeProfile->description = $request->description; // Sesuai dengan database
-        $storeProfile->save();
+        if ($request->hasFile('store_image')) {
+            $data['store_image'] = $request->file('store_image')->store('stores', 'public');
+        }
 
+        StoreProfile::create($data);
         return redirect()->route('store_profile.index')->with('success', 'Profil toko berhasil ditambahkan.');
     }
 
-    public function edit()
+    public function edit(StoreProfile $storeProfile)
     {
-        $storeProfile = StoreProfile::first();
         return view('admin.store_profile.edit', compact('storeProfile'));
     }
 
-    public function update(Request $request)
+    public function update(Request $request, StoreProfile $storeProfile)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required', // Sesuai dengan database
-            'image' => 'image|mimes:jpeg,png,jpg|max:2048',
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'header_description' => 'required|string',
+            'header_image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'store_image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'main_description' => 'required|string',
         ]);
 
-        $storeProfile = StoreProfile::first() ?? new StoreProfile();
-
-        if ($request->hasFile('image')) {
-            if ($storeProfile->image) {
-                Storage::disk('public')->delete($storeProfile->image);
-            }
-            $storeProfile->image = $request->file('image')->store('store_profile', 'public');
+        if ($request->hasFile('header_image')) {
+            $data['header_image'] = $request->file('header_image')->store('headers', 'public');
         }
 
-        $storeProfile->title = $request->title;
-        $storeProfile->description = $request->description; // Sesuai dengan database
-        $storeProfile->save();
+        if ($request->hasFile('store_image')) {
+            $data['store_image'] = $request->file('store_image')->store('stores', 'public');
+        }
 
-        return redirect()->route('store_profile.index')->with('success', 'Profil Toko berhasil diperbarui.');
+        $storeProfile->update($data);
+        return redirect()->route('store-profiles.index')->with('success', 'Profil toko berhasil diperbarui.');
     }
+
+    public function destroy(StoreProfile $storeProfile)
+    {
+        $storeProfile->delete();
+        return redirect()->route('store-profiles.index')->with('success', 'Profil toko berhasil dihapus.');
+    }
+
+    public function frontend()
+{
+    $storeProfile = StoreProfile::latest()->first(); // atau find(1) kalau datanya cuma satu
+    return view('profil_toko.index', compact('storeProfile'));
+}
+
 }

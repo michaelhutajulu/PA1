@@ -9,5 +9,11 @@ class StoreProfile extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'image'];
+    protected $fillable = [
+        'title',
+        'header_description',
+        'header_image',
+        'store_image',
+        'main_description',
+    ];
 }

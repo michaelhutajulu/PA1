@@ -8,15 +8,18 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\SaranController;
+use App\Http\Controllers\CatalogController;
+
 
 
 // ==========================================
 // 🔵 1. HALAMAN BERANDA UNTUK USER (dengan data produk)
 // ==========================================
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::post('/saran', [SaranController::class, 'store'])->name('saran.store');
 Route::get('/produk/{id}', [ProductController::class, 'show'])->name('admin.products.show');
-
+Route::get('/katalog', [CatalogController::class, 'index'])->name('katalog.index');
+Route::get('/katalog/{id}', [CatalogController::class, 'show'])->name('katalog.show');
+Route::get('/profil-toko', [StoreProfileController::class, 'frontend'])->name('profil_toko');
 
 // NOTE: Jangan lupa buat HomeController & method index()
 

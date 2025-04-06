@@ -1,42 +1,38 @@
-@extends('layouts.admin')
+@extends('layouts.admin') {{-- Ganti dengan layout AdminLTE kamu --}}
 
 @section('content')
 <div class="container">
-    <h1>Profil Toko</h1>
+    <h1 class="mb-4">Profil Toko</h1>
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    {{-- Form update profil toko --}}
-    <form action="{{ route('store_profile.update') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        @method('PUT')
+    @if ($storeProfile)
+        <div class="card">
+            <div class="card-body">
+                <h4>{{ $storeProfile->title }}</h4>
+                <p>{{ $storeProfile->header_description }}</p>
 
-        <div class="mb-3">
-            <label for="title" class="form-label">Judul Toko</label>
-            <input type="text" name="title" id="title" class="form-control" 
-                value="{{ old('title', $storeProfile->title ?? '') }}" required>
-        </div>
-
-        <div class="mb-3">
-            <label for="description" class="form-label">Deskripsi</label>
-            <textarea name="description" id="description" class="form-control" rows="5" required>{{ old('description', $storeProfile->description ?? '') }}</textarea>
-        </div>
-
-        <div class="mb-3">
-            <label for="image" class="form-label">Gambar Toko</label>
-            @if (!empty($storeProfile->image))
-                <div class="mb-2">
-                    <img src="{{ asset('storage/' . $storeProfile->image) }}" alt="Gambar Toko" width="200">
+                <div class="mb-3">
+                    <strong>Gambar Judul:</strong><br>
+                    <img src="{{ asset('storage/' . $storeProfile->header_image) }}" alt="" width="300">
                 </div>
-            @endif
-            <input type="file" name="image" id="image" class="form-control">
+
+                <div class="mb-3">
+                    <strong>Gambar Toko:</strong><br>
+                    <img src="{{ asset('storage/' . $storeProfile->store_image) }}" alt="" width="300">
+                </div>
+
+                <p><strong>Deskripsi Toko:</strong></p>
+                <p>{{ $storeProfile->main_description }}</p>
+
+                <a href="{{ route('store_profile.edit') }}" class="btn btn-warning">Edit</a>
+                </div>
         </div>
-
-        <button type="submit" class="btn btn-success">Simpan Profil</button>
-        <a href="{{ route('store_profile.edit') }}" class="btn btn-primary ">Edit Profil</a>
-
-    </form>
+    @else
+        <div class="alert alert-info">Belum ada data profil toko.</div>
+        <a href="{{ route('store_profile.create') }}" class="btn btn-primary">Tambah Profil</a>
+        @endif
 </div>
 @endsection

@@ -12,8 +12,8 @@
         <div class="collapse navbar-collapse" id="navbarMain">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item"><a class="nav-link text-white" href="{{ route('home') }}">Beranda</a></li>
-                <li class="nav-item"><a class="nav-link text-white" href="{{ route('home') }}">Katalog</a></li>
-                <li class="nav-item"><a class="nav-link text-white" href="{{ route('home') }}">Profil Toko</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="{{ route('katalog.index') }}">Katalog</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="{{ route('profil_toko') }}">Profil Toko</a></li>
                 <li class="nav-item"><a class="nav-link text-white" href="{{ route('home') }}">Wishlist</a></li>
             </ul>
 
