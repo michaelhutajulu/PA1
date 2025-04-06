@@ -64,19 +64,18 @@ class StoreProfileController extends Controller
         }
 
         $storeProfile->update($data);
-        return redirect()->route('store-profiles.index')->with('success', 'Profil toko berhasil diperbarui.');
+        return redirect()->route('store_profile.index')->with('success', 'Profil toko berhasil diperbarui.');
     }
 
     public function destroy(StoreProfile $storeProfile)
     {
         $storeProfile->delete();
-        return redirect()->route('store-profiles.index')->with('success', 'Profil toko berhasil dihapus.');
+        return redirect()->route('store_profile.index')->with('success', 'Profil toko berhasil dihapus.');
     }
 
     public function frontend()
-{
-    $storeProfile = StoreProfile::latest()->first(); // atau find(1) kalau datanya cuma satu
-    return view('profil_toko.index', compact('storeProfile'));
-}
-
+    {
+        $storeProfile = StoreProfile::latest()->first(); // atau find(1)
+        return view('profil_toko.index', compact('storeProfile'));
+    }
 }
