@@ -40,13 +40,17 @@ class StoreProfileController extends Controller
         return redirect()->route('store_profile.index')->with('success', 'Profil toko berhasil ditambahkan.');
     }
 
-    public function edit(StoreProfile $storeProfile)
+    public function edit()
     {
+        $storeProfile = StoreProfile::latest()->first();
         return view('admin.store_profile.edit', compact('storeProfile'));
     }
+    
 
-    public function update(Request $request, StoreProfile $storeProfile)
+    public function update(Request $request)
     {
+        $storeProfile = StoreProfile::latest()->first(); // ambil yang terakhir dibuat
+    
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'header_description' => 'required|string',
@@ -54,18 +58,24 @@ class StoreProfileController extends Controller
             'store_image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'main_description' => 'required|string',
         ]);
-
+    
         if ($request->hasFile('header_image')) {
             $data['header_image'] = $request->file('header_image')->store('headers', 'public');
+        } else {
+            $data['header_image'] = $storeProfile->header_image;
         }
-
+    
         if ($request->hasFile('store_image')) {
             $data['store_image'] = $request->file('store_image')->store('stores', 'public');
+        } else {
+            $data['store_image'] = $storeProfile->store_image;
         }
-
+    
         $storeProfile->update($data);
+    
         return redirect()->route('store_profile.index')->with('success', 'Profil toko berhasil diperbarui.');
     }
+    
 
     public function destroy(StoreProfile $storeProfile)
     {
