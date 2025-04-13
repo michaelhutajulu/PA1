@@ -6,11 +6,9 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\StoreProfileController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\SaranController;
 use App\Http\Controllers\CatalogController;
-
-
+use App\Http\Controllers\FavoriteController;
 
 // ==========================================
 // 🔵 1. HALAMAN BERANDA UNTUK USER (dengan data produk)
@@ -21,7 +19,20 @@ Route::get('/katalog', [CatalogController::class, 'index'])->name('katalog.index
 Route::get('/katalog/{id}', [CatalogController::class, 'show'])->name('katalog.show');
 Route::get('/profil-toko', [StoreProfileController::class, 'frontend'])->name('profil_toko');
 
-// NOTE: Jangan lupa buat HomeController & method index()
+// ==========================================
+// ❤️ FAVORITE (auth only)
+// ==========================================
+Route::middleware('auth')->group(function () {
+    // Toggle favorite status
+    Route::post('/favorite/{product}', [FavoriteController::class, 'toggle'])->name('favorite.toggle');
+
+    // Menampilkan semua favorit user
+    Route::get('/favorites', [FavoriteController::class, 'index'])
+        ->name('favorites.index'); // ✅ nama utama
+    Route::get('/favorites', [FavoriteController::class, 'index'])
+        ->name('favorit.index'); // ✅ alias untuk kompatibilitas dengan view lama
+});
+
 
 // ==========================================
 // 🔒 2. DASHBOARD ADMIN (khusus user login & admin role)
@@ -29,7 +40,6 @@ Route::get('/profil-toko', [StoreProfileController::class, 'frontend'])->name('p
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
 })->middleware(['auth', 'isadmin'])->name('dashboard');
-// NOTE: Kita akan buat middleware is_admin agar hanya admin yg bisa akses
 
 // ==========================================
 // 🧑‍💼 3. ADMIN ROUTES (CRUD Produk, Kategori, Store Profile)

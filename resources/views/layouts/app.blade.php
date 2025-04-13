@@ -33,5 +33,9 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    {{-- ✅ Ini penting agar script dari @push('scripts') bisa muncul --}}
+    @stack('scripts')
+
 </body>
 </html>

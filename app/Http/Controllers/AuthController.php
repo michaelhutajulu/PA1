@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -18,31 +18,43 @@ class AuthController extends Controller
     // Proses login
     public function login(Request $request)
     {
+        // ✅ Validasi input
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+        ], [
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'password.required' => 'Password wajib diisi.',
+            'password.min' => 'Password minimal 6 karakter.',
+        ]);
+    
+        // ✅ Ambil hanya email & password
         $credentials = $request->only('email', 'password');
     
-        // Coba autentikasi user
+        // ✅ Coba autentikasi
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-    
-            // Cek apakah emailnya adalah admin
             if ($user->email === 'admin@bintangserasi.com') {
                 return redirect()->intended('/dashboard');
             }
-    
-            // Kalau bukan admin, arahkan ke home (beranda user)
             return redirect()->intended('/');
         }
     
-        // Kalau login gagal
-        return redirect()->back()->with('error', 'Akun tidak ditemukan atau password salah.');
+        // ❌ Jika gagal login
+        return back()->with('error', 'Email atau password salah');
     }
     
 
     // Logout
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
-        return redirect('/login')->with('success', 'Anda telah logout.');
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login')->with('success', 'Berhasil logout.');
     }
 
     // Menampilkan halaman register
@@ -56,16 +68,25 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
+        ], [
+            'name.required' => 'Nama lengkap wajib diisi.',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'email.unique' => 'Email sudah terdaftar.',
+            'password.required' => 'Password wajib diisi.',
+            'password.min' => 'Password minimal 6 karakter.',
+            'password.confirmed' => 'Konfirmasi password tidak sesuai.',
         ]);
-
+    
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-
+    
         return redirect()->route('login')->with('success', 'Registrasi berhasil! Silakan login.');
     }
+    
 }

@@ -2,66 +2,113 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <title>Register | Bintang Serasi</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register | Toko Bintang Serasi</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #4facfe, #00f2fe);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(120deg, #1e3c72, #2a5298);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
         }
-        .container {
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 350px;
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+        .card h2 {
             text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
         }
-        h2 {
+        .input-group {
             margin-bottom: 20px;
         }
-        input {
+        .input-group input {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+            font-size: 14px;
         }
-        button {
+        .input-group input::placeholder {
+            color: #ccc;
+        }
+        .btn {
+            width: 100%;
+            padding: 12px;
             background: #4facfe;
             border: none;
-            padding: 10px;
-            color: white;
-            width: 100%;
-            border-radius: 5px;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: bold;
             cursor: pointer;
+            transition: 0.3s ease;
         }
-        button:hover {
+        .btn:hover {
             background: #00f2fe;
         }
-        .login-link {
-            margin-top: 10px;
-            display: block;
+        .text-center {
+            text-align: center;
+            margin-top: 15px;
+        }
+        a {
+            color: #add8ff;
+            text-decoration: none;
+        }
+        .alert {
+            margin-bottom: 15px;
+            background: rgba(255, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            color: #ffb3b3;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="card">
         <h2>Register</h2>
-        <form action="{{ route('register') }}" method="POST">
+
+        @if ($errors->any())
+            <div class="alert">
+                <ul style="margin: 0; padding-left: 20px;">
+                    @foreach ($errors->all() as $error)
+                        <li style="color: #ffb3b3;">{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form method="POST" action="{{ route('register') }}">
             @csrf
-            <input type="text" name="name" placeholder="Nama Lengkap" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <input type="password" name="password_confirmation" placeholder="Konfirmasi Password" required>
-            <button type="submit">Daftar</button>
+            <div class="input-group">
+                <input type="text" name="name" placeholder="Nama Lengkap" required>
+            </div>
+            <div class="input-group">
+                <input type="email" name="email" placeholder="Email" required>
+            </div>
+            <div class="input-group">
+                <input type="password" name="password" placeholder="Password" required>
+            </div>
+            <div class="input-group">
+                <input type="password" name="password_confirmation" placeholder="Konfirmasi Password" required>
+            </div>
+            <button class="btn" type="submit">Daftar</button>
         </form>
-        <a href="{{ route('login') }}" class="login-link">Sudah punya akun? Login</a>
+
+        <div class="text-center">
+            Sudah punya akun? <a href="{{ route('login') }}">Login</a>
+        </div>
     </div>
 </body>
 </html>
