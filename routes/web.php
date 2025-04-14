@@ -18,6 +18,8 @@ Route::get('/produk/{id}', [ProductController::class, 'show'])->name('admin.prod
 Route::get('/katalog', [CatalogController::class, 'index'])->name('katalog.index');
 Route::get('/katalog/{id}', [CatalogController::class, 'show'])->name('katalog.show');
 Route::get('/profil-toko', [StoreProfileController::class, 'frontend'])->name('profil_toko');
+Route::get('/search', [App\Http\Controllers\SearchController::class, 'index'])->name('search');
+
 
 // ==========================================
 // ❤️ FAVORITE (auth only)
