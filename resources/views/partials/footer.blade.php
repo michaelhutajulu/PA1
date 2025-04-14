@@ -20,22 +20,24 @@
                 </p>
             </div>
 
-            <!-- SARAN FORM -->
-            <div class="col-md-6">
-                <h5 class="fw-bold mb-2">💡 Saran & Masukan</h5>
-                <p class="text-white-50">Bantu kami berkembang dengan memberikan saran terbaik Anda.</p>
-                <form action="#" method="POST">
-                    @csrf
-                    <div class="mb-3">
-                        <input type="text" name="saran" class="form-control rounded-3 shadow-sm border-0" placeholder="Masukkan saran anda..." required>
-                    </div>
-                    <div class="mb-3">
-                        <textarea name="pesan" rows="3" class="form-control rounded-3 shadow-sm border-0" placeholder="Ketikkan pesan anda..." required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-light fw-semibold px-4 rounded-pill">Kirim</button>
-                </form>
-            </div>
+<!-- SARAN FORM -->
+@auth
+    @if(Auth::user()->email !== 'admin@bintangserasi.com')
+        <div class="col-md-6">
+            <h5 class="fw-bold mb-2">💡 Saran & Masukan</h5>
+            <p class="text-white-50">Bantu kami berkembang dengan memberikan saran terbaik Anda.</p>
+            <form action="{{ route('saran.kirim') }}" method="POST">
+                @csrf
+                <div class="mb-3">
+                    <textarea name="pesan" rows="3" class="form-control rounded-3 shadow-sm border-0" placeholder="Ketikkan pesan anda..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-light fw-semibold px-4 rounded-pill">Kirim</button>
+            </form>
         </div>
+    @endif
+@endauth
+
+
 
         <!-- Divider -->
         <hr class="my-4" style="border-color: rgba(255,255,255,0.1);">

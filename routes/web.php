@@ -20,7 +20,6 @@ Route::get('/katalog/{id}', [CatalogController::class, 'show'])->name('katalog.s
 Route::get('/profil-toko', [StoreProfileController::class, 'frontend'])->name('profil_toko');
 Route::get('/search', [App\Http\Controllers\SearchController::class, 'index'])->name('search');
 
-
 // ==========================================
 // ❤️ FAVORITE (auth only)
 // ==========================================
@@ -29,12 +28,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/favorite/{product}', [FavoriteController::class, 'toggle'])->name('favorite.toggle');
 
     // Menampilkan semua favorit user
-    Route::get('/favorites', [FavoriteController::class, 'index'])
-        ->name('favorites.index'); // ✅ nama utama
-    Route::get('/favorites', [FavoriteController::class, 'index'])
-        ->name('favorit.index'); // ✅ alias untuk kompatibilitas dengan view lama
-});
+    Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index'); // ✅ nama utama
+    Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorit.index'); // ✅ alias
 
+    // 💬 Kirim kritik & saran (hanya untuk user login)
+    Route::post('/kirim-saran', [SaranController::class, 'kirim'])->name('saran.kirim');
+});
 
 // ==========================================
 // 🔒 2. DASHBOARD ADMIN (khusus user login & admin role)

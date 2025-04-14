@@ -2,6 +2,15 @@
 
 @section('content')
 <div class="container mt-5">
+
+    {{-- Tampilkan pesan error jika ada --}}
+    @if(session('error'))
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <h3 class="fw-bold mb-4 text-center">
         Hasil pencarian untuk: "{{ $query }}"
     </h3>

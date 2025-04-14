@@ -40,28 +40,37 @@
             </ul>
 
             {{-- Auth Section --}}
-            @guest
-                <a href="{{ route('login') }}" class="text-white fs-5">
-                    <i class="bi bi-person-circle"></i>
-                </a>
-            @else
-                <div class="dropdown">
-                    <a class="text-white fs-5 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                        <i class="bi bi-person-circle"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        @if (Auth::user()->email === 'admin@bintangserasi.com')
-                            <li><a class="dropdown-item" href="{{ url('/dashboard') }}">Kelola</a></li>
-                        @endif
-                        <li>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit" class="dropdown-item text-danger">Logout</button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-            @endguest
+@guest
+    <a href="{{ route('login') }}" class="text-white fs-5">
+        <i class="bi bi-person-circle"></i>
+    </a>
+@else
+    <div class="dropdown">
+        <a class="text-white fs-5 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+            <i class="bi bi-person-circle"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+            @if (Auth::user()->email === 'admin@bintangserasi.com')
+                <li><a class="dropdown-item" href="{{ url('/dashboard') }}">Dashboard</a></li>
+            @endif
+
+            {{-- Nama user + garis biru di bawah --}}
+            <li class="dropdown-item-text fw-semibold text-primary">
+                {{ Auth::user()->name }}
+            </li>
+            <li>
+                <hr style="border: none; border-top: 2px solid #0d6efd; margin: 0.25rem 1rem;">
+            </li>
+
+            <li>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="dropdown-item text-danger">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+@endguest
         </div>
     </div>
 </nav>
