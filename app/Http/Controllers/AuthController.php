@@ -66,17 +66,29 @@ class AuthController extends Controller
     // Proses register
     public function register(Request $request)
     {
+
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6|confirmed',
+            'name' => 'required|string|max:100',
+            'email' => [
+                'required',
+                'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/',
+                'unique:users,email',
+            ],
+            'password' => [
+                'required',
+                'min:8',
+                'regex:/^(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?])[A-Z][A-Za-z0-9!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?]{7,}$/',
+                'confirmed',
+            ],
         ], [
             'name.required' => 'Nama lengkap wajib diisi.',
             'email.required' => 'Email wajib diisi.',
             'email.email' => 'Format email tidak valid.',
+            'email.regex' => 'Email harus menggunakan domain @gmail.com.',
             'email.unique' => 'Email sudah terdaftar.',
             'password.required' => 'Password wajib diisi.',
-            'password.min' => 'Password minimal 6 karakter.',
+            'password.min' => 'Password minimal 8 karakter.',
+            'password.regex' => 'Password harus diawali huruf kapital dan mengandung karakter unik.',
             'password.confirmed' => 'Konfirmasi password tidak sesuai.',
         ]);
     

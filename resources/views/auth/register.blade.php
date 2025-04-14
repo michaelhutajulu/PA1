@@ -92,7 +92,7 @@
         <form method="POST" action="{{ route('register') }}">
             @csrf
             <div class="input-group">
-                <input type="text" name="name" placeholder="Nama Lengkap" required>
+                <input type="text" name="name" placeholder="Nama" required>
             </div>
             <div class="input-group">
                 <input type="email" name="email" placeholder="Email" required>
