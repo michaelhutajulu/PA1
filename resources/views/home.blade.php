@@ -23,7 +23,7 @@
                     <h5>{{ $product->name }}</h5>
                     <p class="text-muted">Rp. {{ number_format($product->price, 0, ',', '.') }}</p>
                     <a href="{{ route('admin.products.show', $product->id) }}" class="btn btn-outline-primary btn-sm">Detail</a>
-                    </div>
+                </div>
             </div>
         </div>
         @endforeach
@@ -31,3 +31,10 @@
 
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    // Hapus redirect setelah login supaya tidak nyangkut di sessionStorage
+    sessionStorage.removeItem('redirect_after_login');
+</script>
+@endpush

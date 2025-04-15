@@ -113,6 +113,21 @@
                 localStorage.setItem('from_saran', 'true');
             }
         });
+
+        document.addEventListener('DOMContentLoaded', function () {
+        const redirectUrl = sessionStorage.getItem('redirect_after_login');
+        if (redirectUrl) {
+            // Tambahkan input tersembunyi ke form login
+            const form = document.querySelector('form');
+            if (form) {
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'redirect_after_login';
+                hiddenInput.value = redirectUrl;
+                form.appendChild(hiddenInput);
+            }
+        }
+    });
         </script>
 </body>
 </html>
