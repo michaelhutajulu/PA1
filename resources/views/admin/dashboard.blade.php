@@ -35,19 +35,11 @@
                 <a href="{{ route('categories.index') }}" class="small-box-footer">Lihat Kategori <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
-
-        <!-- Kotak Profil Toko -->
-        <div class="col-lg-3 col-6">
-            <div class="small-box bg-warning">
-                <div class="inner">
-                    <h3>{{ \App\Models\StoreProfile::count() }}</h3>
-                    <p>Profil Toko</p>
-                </div>
-                <div class="icon">
-                    <i class="fas fa-store"></i>
-                </div>
-                <a href="{{ route('store_profile.index') }}" class="small-box-footer">Lihat Profil Toko <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-        </div>
     </div>
+@stop
+
+@section('js')
+<script>
+    sessionStorage.removeItem('redirect_after_login');
+</script>
 @stop

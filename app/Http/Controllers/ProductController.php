@@ -88,4 +88,28 @@ class ProductController extends Controller
         $product = Product::findOrFail($id); // cari produk berdasarkan ID
         return view('admin.products.show', compact('product'));
     }
+
+    public function toggleFavorite($id)
+{
+    $user = auth()->user();
+    $product = Product::findOrFail($id);
+
+    if ($user->favorites()->where('product_id', $id)->exists()) {
+        $user->favorites()->detach($id);
+        return response()->json(['status' => 'removed']);
+    } else {
+        $user->favorites()->attach($id);
+        return response()->json(['status' => 'added']);
+    }
+}
+
+public function favorit()
+{
+    $user = auth()->user();
+    $favorites = $user->favorites()->with('category')->get();
+
+    return view('favorites.index', compact('favorites'));
+}
+
+
 }

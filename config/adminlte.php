@@ -315,10 +315,6 @@ return [
 
         // Sidebar items:
         [
-            'type' => 'sidebar-menu-search',
-            'text' => 'search',
-        ],
-        [
             'text' => 'blog',
             'url' => 'admin/blog',
             'can' => 'manage-blog',
@@ -331,10 +327,6 @@ return [
                 'text' => 'Semua Produk',
                 'url'  => 'admin/products',
             ],
-            [
-                'text' => 'Tambah Produk',
-                'url'  => 'admin/products/create',
-            ],
         ],
     ],
     [
@@ -345,10 +337,6 @@ return [
                 'text' => 'Semua Kategori',
                 'url'  => 'admin/categories',
             ],
-            [
-                'text' => 'Tambah Kategori',
-                'url'  => 'admin/categories/create',
-            ],
         ],
     ],
     [
@@ -358,10 +346,6 @@ return [
             [
                 'text' => 'Toko',
                 'url'  => 'admin/store_profile',
-            ],
-            [
-                'text' => 'Edit Toko',
-                'url'  => 'admin/store_profile/edit',
             ],
         ],
     ],

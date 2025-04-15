@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Login;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\ServiceProvider;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -15,34 +18,55 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    // Proses login
-    public function login(Request $request)
-    {
-        $credentials = $request->only('email', 'password');
-    
-        // Coba autentikasi user
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-    
-            // Cek apakah emailnya adalah admin
-            if ($user->email === 'admin@bintangserasi.com') {
-                return redirect()->intended('/dashboard');
-            }
-    
-            // Kalau bukan admin, arahkan ke home (beranda user)
-            return redirect()->intended('/');
+// Proses login
+public function login(Request $request)
+{
+    // ✅ Validasi input
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|min:6',
+    ], [
+        'email.required' => 'Email wajib diisi.',
+        'email.email' => 'Format email tidak valid.',
+        'password.required' => 'Password wajib diisi.',
+        'password.min' => 'Password minimal 6 karakter.',
+    ]);
+
+    // ✅ Ambil hanya email & password
+    $credentials = $request->only('email', 'password');
+
+    // ✅ Coba autentikasi
+    if (Auth::attempt($credentials)) {
+        $request->session()->regenerate();
+
+        // ✅ Redirect kembali jika ada redirect_after_login dari form
+        if ($request->filled('redirect_after_login')) {
+            return redirect($request->input('redirect_after_login'));
         }
-    
-        // Kalau login gagal
-        return redirect()->back()->with('error', 'Akun tidak ditemukan atau password salah.');
+
+        $user = Auth::user();
+        if ($user->email === 'admin@bintangserasi.com') {
+            return redirect()->intended('/dashboard');
+        }
+        return redirect()->intended('/');
     }
+
+    // ❌ Jika gagal login
+    return back()->with('error', 'Email atau password salah');
+}
+
     
 
+    
     // Logout
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
-        return redirect('/login')->with('success', 'Anda telah logout.');
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 
     // Menampilkan halaman register
@@ -54,18 +78,59 @@ class AuthController extends Controller
     // Proses register
     public function register(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ]);
 
+        $request->validate([
+            'name' => 'required|string|max:100',
+            'email' => [
+                'required',
+                'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/',
+                'unique:users,email',
+            ],
+            'password' => [
+                'required',
+                'min:8',
+                'regex:/^(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?])[A-Z][A-Za-z0-9!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?]{7,}$/',
+                'confirmed',
+            ],
+        ], [
+            'name.required' => 'Nama lengkap wajib diisi.',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'email.regex' => 'Email harus menggunakan domain @gmail.com.',
+            'email.unique' => 'Email sudah terdaftar.',
+            'password.required' => 'Password wajib diisi.',
+            'password.min' => 'Password minimal 8 karakter.',
+            'password.regex' => 'Password harus diawali huruf kapital dan mengandung karakter unik.',
+            'password.confirmed' => 'Konfirmasi password tidak sesuai.',
+        ]);
+    
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-
+    
         return redirect()->route('login')->with('success', 'Registrasi berhasil! Silakan login.');
+    }
+    
+}
+
+class EventServiceProvider extends ServiceProvider
+{
+    /**
+     * Register any events for your application.
+     */
+    public function boot(): void
+    {
+        // Mendengarkan event login
+        Event::listen(Login::class, function ($event) {
+            // Mengambil draft saran dari localStorage melalui JavaScript tidak bisa dilakukan langsung di server
+            // Jadi kita hanya mengarahkan kembali ke halaman dengan form saran jika ada indikasi dari draft_saran
+            
+            if (session()->has('draft_saran')) {
+                // Set intended URL ke halaman yang memiliki form saran
+                session()->put('url.intended', url('/'));
+            }
+        });
     }
 }
