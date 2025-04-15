@@ -1,3 +1,17 @@
+<!-- Google Material Symbols - Tambahkan di <head> layout -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+  vertical-align: middle;
+  font-size: 24px;
+}
+</style>
+
 <nav class="navbar navbar-expand-lg shadow-sm" style="background-color: #0d3b66;">
     <div class="container d-flex align-items-center">
 
@@ -33,7 +47,7 @@
                 @auth
                 <li class="nav-item">
                     <a class="nav-link text-white fw-bold d-flex align-items-center" href="{{ route('favorit.index') }}">
-                        <i class="bi bi-heart-fill me-1"></i> FAVORIT
+                        <i></i> FAVORIT
                     </a>
                 </li>
                 @endauth
@@ -42,12 +56,12 @@
             {{-- Auth Section --}}
             @guest
                 <a href="javascript:void(0)" onclick="toggleLoginModal()" class="text-white fs-5" title="Login">
-                    <i class="bi bi-person-circle"></i>
+                    <span class="material-symbols-outlined">login</span>
                 </a>
             @else
                 <div class="dropdown">
                     <a class="text-white fs-5 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                        <i class="bi bi-person-circle"></i>
+                        <span class="material-symbols-outlined">logout</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                         @if (Auth::user()->email === 'admin@bintangserasi.com')
@@ -64,7 +78,9 @@
                         <li>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <button type="submit" class="dropdown-item text-danger">Logout</button>
+                                <button type="submit" class="dropdown-item text-danger d-flex align-items-center">
+                                    <span class="material-symbols-outlined me-2">logout</span> Logout
+                                </button>
                             </form>
                         </li>
                     </ul>

@@ -45,37 +45,52 @@
 .modal-login-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.6); /* Gelap untuk latar belakang */
     backdrop-filter: blur(6px);
     display: none;
     align-items: center;
     justify-content: center;
     z-index: 9999;
 }
+
 .modal-login-card {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.85); /* Putih transparan */
     backdrop-filter: blur(15px);
     border-radius: 15px;
     padding: 40px;
     width: 100%;
     max-width: 400px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.3);
-    color: #fff;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+    color: #111; /* Teks gelap */
     position: relative;
     font-family: 'Segoe UI', sans-serif;
 }
-.modal-login-card h2 { text-align: center; margin-bottom: 30px; font-size: 28px; }
-.modal-login-card .input-group { margin-bottom: 20px; }
+
+.modal-login-card h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+    color: #111;
+}
+
+.modal-login-card .input-group {
+    margin-bottom: 20px;
+}
+
 .modal-login-card input {
     width: 100%;
     padding: 12px;
-    border: none;
+    border: 1px solid #ccc;
     border-radius: 8px;
-    background: rgba(255,255,255,0.15);
-    color: #fff;
-    font-size: 14px;
+    background: rgba(255,255,255,0.6); /* Input transparan putih */
+    color: #111;
+    font-size: 15px;
 }
-.modal-login-card input::placeholder { color: #ccc; }
+
+.modal-login-card input::placeholder {
+    color: #666;
+}
+
 .modal-login-card .btn {
     width: 100%;
     padding: 12px;
@@ -87,38 +102,53 @@
     cursor: pointer;
     transition: 0.3s ease;
 }
-.modal-login-card .btn:hover { background: #00f2fe; }
-.modal-login-card .text-center { text-align: center; margin-top: 15px; }
-.modal-login-card a { color: #add8ff; text-decoration: none; }
+
+.modal-login-card .btn:hover {
+    background: #00c6fe;
+}
+
+.modal-login-card .text-center {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.modal-login-card a {
+    color: #0077cc;
+    text-decoration: underline;
+}
+
 .modal-login-card .alert {
     margin-bottom: 15px;
     background: rgba(255, 0, 0, 0.2);
     padding: 10px;
     border-radius: 8px;
-    color: #ffb3b3;
+    color: #a10000;
 }
+
 .modal-login-card .alert.success {
     background: rgba(0, 255, 0, 0.2);
-    color: #b2ffb2;
+    color: #007a00;
 }
+
 .modal-login-card .back-btn {
     position: absolute;
     top: 15px;
     right: 15px;
-    background: transparent;
-    border: 1px solid rgba(252, 252, 252, 0.53);
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid #ccc;
     border-radius: 5px;
     padding: 4px 10px;
-    color: #fff;
+    color: #111;
     font-size: 16px;
     cursor: pointer;
-    backdrop-filter: blur(4px);
     transition: all 0.3s ease;
 }
+
 .modal-login-card .back-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.5);
+    border-color: #999;
 }
+
 </style>
 
 <script>
