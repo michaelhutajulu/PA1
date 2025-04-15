@@ -60,7 +60,7 @@
                 </a>
             @else
                 <div class="dropdown">
-                    <a class="text-white fs-5 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                    <a class="text-white fs-5" href="#" role="button" data-bs-toggle="dropdown">
                         <span class="material-symbols-outlined">logout</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
