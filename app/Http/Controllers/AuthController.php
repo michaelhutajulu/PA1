@@ -18,35 +18,43 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    // Proses login
-    public function login(Request $request)
-    {
-        // ✅ Validasi input
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:6',
-        ], [
-            'email.required' => 'Email wajib diisi.',
-            'email.email' => 'Format email tidak valid.',
-            'password.required' => 'Password wajib diisi.',
-            'password.min' => 'Password minimal 6 karakter.',
-        ]);
-    
-        // ✅ Ambil hanya email & password
-        $credentials = $request->only('email', 'password');
-    
-        // ✅ Coba autentikasi
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-            if ($user->email === 'admin@bintangserasi.com') {
-                return redirect()->intended('/dashboard');
-            }
-            return redirect()->intended('/');
+// Proses login
+public function login(Request $request)
+{
+    // ✅ Validasi input
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|min:6',
+    ], [
+        'email.required' => 'Email wajib diisi.',
+        'email.email' => 'Format email tidak valid.',
+        'password.required' => 'Password wajib diisi.',
+        'password.min' => 'Password minimal 6 karakter.',
+    ]);
+
+    // ✅ Ambil hanya email & password
+    $credentials = $request->only('email', 'password');
+
+    // ✅ Coba autentikasi
+    if (Auth::attempt($credentials)) {
+        $request->session()->regenerate();
+
+        // ✅ Redirect kembali jika ada redirect_after_login dari form
+        if ($request->filled('redirect_after_login')) {
+            return redirect($request->input('redirect_after_login'));
         }
-    
-        // ❌ Jika gagal login
-        return back()->with('error', 'Email atau password salah');
+
+        $user = Auth::user();
+        if ($user->email === 'admin@bintangserasi.com') {
+            return redirect()->intended('/dashboard');
+        }
+        return redirect()->intended('/');
     }
+
+    // ❌ Jika gagal login
+    return back()->with('error', 'Email atau password salah');
+}
+
     
 
     
@@ -58,7 +66,7 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login')->with('success', 'Berhasil logout.');
+        return redirect('/');
     }
 
     // Menampilkan halaman register

@@ -16,6 +16,7 @@
             color: #fff;
         }
         .card {
+            position: relative;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(15px);
             border-radius: 15px;
@@ -73,10 +74,13 @@
             border-radius: 8px;
             color: #ffb3b3;
         }
+
     </style>
 </head>
 <body>
     <div class="card">
+
+
         <h2>Login</h2>
 
         @if(session('error'))
@@ -101,18 +105,21 @@
             Belum punya akun? <a href="{{ route('register') }}">Registrasi</a>
         </div>
     </div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Cek apakah pengguna dialihkan dari form saran
-            const referrer = document.referrer;
-            const params = new URLSearchParams(window.location.search);
-            
-            // Jika ada pesan info tentang login untuk saran atau dari referrer yang berisi form saran
-            if (params.has('info') || (referrer && referrer.includes('saran'))) {
-                // Tandai bahwa pengguna berasal dari form saran
-                localStorage.setItem('from_saran', 'true');
+        document.addEventListener('DOMContentLoaded', function () {
+            const redirectUrl = sessionStorage.getItem('redirect_after_login');
+            if (redirectUrl) {
+                const form = document.querySelector('form');
+                if (form) {
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.name = 'redirect_after_login';
+                    hiddenInput.value = redirectUrl;
+                    form.appendChild(hiddenInput);
+                }
             }
         });
-        </script>
+    </script>
 </body>
 </html>

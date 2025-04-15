@@ -17,20 +17,28 @@
                 {{ $product->description ?? 'Tidak ada deskripsi.' }}
             </div>
 
-            @auth
-                <div class="d-flex align-items-center gap-2 mt-3">
-                    <i 
-                        id="favorite-icon"
-                        class="bi {{ auth()->user()->favorites->contains($product->id) ? 'bi-heart-fill text-danger' : 'bi-heart' }}" 
-                        style="font-size: 1.6rem; cursor: pointer;"
-                        data-id="{{ $product->id }}"
-                    ></i>
-                    <span id="favorite-text">
+            {{-- Ikon Favorit Tampil untuk Semua --}}
+            <div class="d-flex align-items-center gap-2 mt-3">
+                <i 
+                    id="favorite-icon"
+                    class="bi 
+                        @auth 
+                            {{ auth()->user()->favorites->contains($product->id) ? 'bi-heart-fill text-danger' : 'bi-heart' }} 
+                        @else 
+                            bi-heart 
+                        @endauth
+                    "
+                    style="font-size: 1.6rem; cursor: pointer;"
+                    data-id="{{ $product->id }}"
+                ></i>
+                <span id="favorite-text">
+                    @auth
                         {{ auth()->user()->favorites->contains($product->id) ? 'Hapus dari Favorit' : 'Tambah Favorit' }}
-                    </span>
-                </div>
-            @endauth
-
+                    @else
+                        Tambah Favorit
+                    @endauth
+                </span>
+            </div>
         </div>
     </div>
 </div>
@@ -46,29 +54,37 @@
             icon.addEventListener('click', function () {
                 const productId = this.getAttribute('data-id');
 
-                fetch(`/favorite/${productId}`, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'added') {
-                        icon.classList.remove('bi-heart');
-                        icon.classList.add('bi-heart-fill', 'text-danger');
-                        text.textContent = 'Hapus dari Favorit';
-                    } else if (data.status === 'removed') {
-                        icon.classList.remove('bi-heart-fill', 'text-danger');
-                        icon.classList.add('bi-heart');
-                        text.textContent = 'Tambah Favorit';
-                    }
-                })
-                .catch(error => {
-                    console.error('Terjadi kesalahan:', error);
-                });
+                @if (auth()->check())
+                    // Jika user login, kirim request favorit
+                    fetch(`/favorite/${productId}`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'added') {
+                            icon.classList.remove('bi-heart');
+                            icon.classList.add('bi-heart-fill', 'text-danger');
+                            text.textContent = 'Hapus dari Favorit';
+                        } else if (data.status === 'removed') {
+                            icon.classList.remove('bi-heart-fill', 'text-danger');
+                            icon.classList.add('bi-heart');
+                            text.textContent = 'Tambah Favorit';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Terjadi kesalahan:', error);
+                    });
+                @else
+                    // Simpan URL sekarang ke sessionStorage
+                    sessionStorage.setItem('redirect_after_login', window.location.href);
+                    // Arahkan ke halaman login
+                    window.location.href = '{{ route("login") }}';
+                @endif
             });
         }
     });

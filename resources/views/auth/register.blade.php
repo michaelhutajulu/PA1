@@ -73,6 +73,8 @@
             border-radius: 8px;
             color: #ffb3b3;
         }
+
+
     </style>
 </head>
 <body>

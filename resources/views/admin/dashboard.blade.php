@@ -37,3 +37,9 @@
         </div>
     </div>
 @stop
+
+@section('js')
+<script>
+    sessionStorage.removeItem('redirect_after_login');
+</script>
+@stop
