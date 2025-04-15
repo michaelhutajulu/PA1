@@ -138,16 +138,16 @@
 
                 <!-- Info Toko -->
                 <div class="col-md-4">
-                    <div class="mb-4">
-                        <h3 class="mb-3 fw-bold" style="color: #284593;">Waktu Operasional</h3>
-                        <p class="mb-1 text-secondary">Senin - Sabtu : 08.00 - 20.00</p>
-                        <p class="text-secondary">Minggu : 12.00 - 20.00</p>
-                    </div>
-                    <div>
-                        <h3 class="mb-3 fw-bold" style="color: #284593;">No. Telepon</h3>
-                        <p class="text-secondary">0812-6466-7712</p>
-                    </div>
-                </div>
+                <h5 style="color: #284593;"><strong>Informasi Toko</strong></h5>
+                <hr>
+                <p class="fw-semibold" style="color: #284593;">Waktu Operasional</p>
+                <p>Senin - Sabtu : 08.00 - 20.00</p>
+                <p>Minggu : 12.00 - 20.00</p>
+                <p id="status-operasional" class="fw-semibold mt-2" style="color: #284593;"></p>
+
+                <p class="fw-semibold mt-4" style="color: #284593;">No. Telepon</p>
+                <p>0812-6466-7712</p>
+            </div>
             </div>
         </div>
     </div>
@@ -246,6 +246,41 @@
                     pesanSaran.focus();
                 }, 500);
             }
+            //Infromasi toko//
+            function updateStatus() {
+                const statusElement = document.getElementById('status-operasional');
+                if (!statusElement) return;
+
+                const now = new Date();
+                const dayIndex = now.getDay();
+                const hour = now.getHours();
+                const minute = now.getMinutes();
+                const currentTime = hour + minute / 60;
+
+                let isOpen = false;
+
+                if (dayIndex === 0) { // Minggu
+                    isOpen = (currentTime >= 12 && currentTime < 20);
+                } else { // Senin - Sabtu
+                    isOpen = (currentTime >= 8 && currentTime < 20);
+                }
+
+                const dayNames = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                const today = dayNames[dayIndex];
+
+                const timeFormatted = now.toLocaleTimeString('id-ID', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                });
+
+                statusElement.innerHTML = `Hari ini: <strong>${today}</strong>, pukul <strong>${timeFormatted}</strong> — ` +
+                    (isOpen
+                        ? '<span style="color: green;">Sedang Buka</span>'
+                        : '<span style="color: red;">Tutup</span>');
+            }
+
+            updateStatus();
+            setInterval(updateStatus, 60000); // Update tiap 1 menit
         });
     </script>
 </footer>
