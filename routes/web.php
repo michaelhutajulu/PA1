@@ -32,8 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorit.index'); // ✅ alias
 
     // 💬 Kirim kritik & saran (hanya untuk user login)
-    Route::post('/kirim-saran', [SaranController::class, 'kirim'])->name('saran.kirim');
-});
+    Route::post('/saran/kirim', [SaranController::class, 'kirim'])->name('saran.kirim');});
 
 // ==========================================
 // 🔒 2. DASHBOARD ADMIN (khusus user login & admin role)

@@ -101,5 +101,18 @@
             Belum punya akun? <a href="{{ route('register') }}">Registrasi</a>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cek apakah pengguna dialihkan dari form saran
+            const referrer = document.referrer;
+            const params = new URLSearchParams(window.location.search);
+            
+            // Jika ada pesan info tentang login untuk saran atau dari referrer yang berisi form saran
+            if (params.has('info') || (referrer && referrer.includes('saran'))) {
+                // Tandai bahwa pengguna berasal dari form saran
+                localStorage.setItem('from_saran', 'true');
+            }
+        });
+        </script>
 </body>
 </html>

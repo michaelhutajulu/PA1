@@ -99,7 +99,7 @@
         </div>
     </div>
 
-    {{-- Informasi Lanjutan --}}
+    {{-- Informasi Lanjutan
 <div class="info-section text-center">
     <h4 class="fw-bold mb-4">Informasi Lanjutan :</h4>
     <div class="info-cards d-flex justify-content-center flex-wrap gap-4">
@@ -116,7 +116,7 @@
             <p>Senin - Sabtu : 08.00 - 20.00<br>Minggu : 12.00 - 20.00</p>
         </div>
     </div>
-</div>
+</div> --}}
 
 
 </div>

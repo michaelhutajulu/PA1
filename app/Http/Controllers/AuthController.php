@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Login;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\ServiceProvider;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -46,6 +49,7 @@ class AuthController extends Controller
     }
     
 
+    
     // Logout
     public function logout(Request $request)
     {
@@ -101,4 +105,24 @@ class AuthController extends Controller
         return redirect()->route('login')->with('success', 'Registrasi berhasil! Silakan login.');
     }
     
+}
+
+class EventServiceProvider extends ServiceProvider
+{
+    /**
+     * Register any events for your application.
+     */
+    public function boot(): void
+    {
+        // Mendengarkan event login
+        Event::listen(Login::class, function ($event) {
+            // Mengambil draft saran dari localStorage melalui JavaScript tidak bisa dilakukan langsung di server
+            // Jadi kita hanya mengarahkan kembali ke halaman dengan form saran jika ada indikasi dari draft_saran
+            
+            if (session()->has('draft_saran')) {
+                // Set intended URL ke halaman yang memiliki form saran
+                session()->put('url.intended', url('/'));
+            }
+        });
+    }
 }
