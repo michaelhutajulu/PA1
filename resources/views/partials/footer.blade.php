@@ -1,7 +1,7 @@
 <footer style="background-color: #284593; color: white; padding-top: 60px; padding-bottom: 0;">
     <div class="container pb-5">
         <div class="row g-5">
-            <!-- Left Side - Map -->
+            <!-- Google Map -->
             <div class="col-lg-6 mb-4 mb-lg-0">
                 <h2 class="fw-bold mb-4" style="font-size: 28px;">Lokasi Bintang Serasi</h2>
                 <div class="rounded overflow-hidden shadow-lg" style="border-radius: 15px;">
@@ -13,52 +13,117 @@
                 </div>
             </div>
 
-            <!-- Right Side - Form -->
+            <!-- Kritik dan Saran -->
             <div class="col-lg-6">
-                <h2 class="fw-bold mb-3" style="font-size: 28px;">Bantu kami dengan memberikan saran kepada Bintang Serasi</h2>
-                {{-- <p class="mb-4 text-white-50">Saran anda sangat kami apresiasi</p> --}}
-
+                <h2 class="fw-bold mb-3" style="font-size: 28px;">Bantu kami dengan memberikan saran kepada Bintang
+                    Serasi</h2>
                 <div class="bg-white p-4 rounded-2 shadow">
+                    <!-- Alert Messages -->
+                    @if (session('success'))
+                        <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
+                    @endif
+
+                    @if (session('info'))
+                        <div class="alert alert-info alert-dismissible fade show mb-3" role="alert">
+                            {{ session('info') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
+                    @endif
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
+                    @endif
                     <form id="formSaran" action="{{ route('saran.kirim') }}" method="POST">
                         @csrf
                         <div class="mb-3">
-                            <textarea 
-                                name="pesan" 
-                                id="pesanSaran"
-                                rows="4" 
-                                class="form-control rounded-3 py-2 px-3" 
-                                placeholder="saran anda" 
-                                required
-                                style="resize: none; border-color: #e0e0e0; background-color: #f8f9fa;">{{ session('draft_saran', '') }}</textarea>
+                            <textarea name="pesan" id="pesanSaran" rows="4" class="form-control rounded-3 py-2 px-3"
+                                placeholder="Saran Anda" required style="resize: none; border-color: #e0e0e0; background-color: #f8f9fa;">{{ session('draft_saran', '') }}</textarea>
                         </div>
                         <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-dark rounded-pill fw-semibold px-4 py-2" style="background-color: #000;">Kirim</button>
+                            <button type="submit" class="btn custom-submit-btn rounded-pill fw-semibold px-4 py-2">
+                                Kirim
+                            </button>
                         </div>
+
+                        <style>
+                            .custom-submit-btn {
+                                background-color: #000;
+                                color: white;
+                                border: none;
+                                transition: all 0.3s ease;
+                                position: relative;
+                                overflow: hidden;
+                                z-index: 1;
+                            }
+
+                            .custom-submit-btn::before {
+                                content: '';
+                                position: absolute;
+                                top: 0;
+                                left: -100%;
+                                width: 100%;
+                                height: 100%;
+                                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                                z-index: -1;
+                            }
+
+                            .custom-submit-btn:hover {
+                                background-color: #284593;
+                                transform: translateY(-3px);
+                                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                            }
+
+                            .custom-submit-btn:hover::before {
+                                left: 100%;
+                            }
+
+                            .custom-submit-btn:active {
+                                transform: translateY(-1px);
+                                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+                            }
+                        </style>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Info Section with White Background -->
+    <!-- Informasi Toko -->
     <div class="bg-white text-dark py-5">
         <div class="container">
             <div class="row g-4">
-                <!-- Left Side - Links -->
+                <!-- Navbar bawah -->
                 <div class="col-md-4 mb-4 mb-md-0">
                     <div class="d-flex align-items-center mb-3">
                         <span class="me-2 fs-4" style="color: #284593;">⭐</span>
                         <h3 class="mb-0 fw-bold" style="color: #284593;">Bintang Serasi</h3>
                     </div>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href="/" class="text-decoration-none text-secondary hover-link">Beranda</a></li>
-                        <li class="mb-2"><a href="/katalog" class="text-decoration-none text-secondary hover-link">Katalog</a></li>
-                        <li class="mb-2"><a href="/favorit" class="text-decoration-none text-secondary hover-link">Favorit</a></li>
-                        <li><a href="/profil-toko" class="text-decoration-none text-secondary hover-link">Profil Toko</a></li>
+                        <li class="mb-2"><a href="/"
+                                class="text-decoration-none text-secondary hover-link">Beranda</a></li>
+                        <li class="mb-2"><a href="/katalog"
+                                class="text-decoration-none text-secondary hover-link">Katalog</a></li>
+                        <li class="mb-2"><a href="/favorit"
+                                class="text-decoration-none text-secondary hover-link">Favorit</a></li>
+                        <li><a href="/profil-toko" class="text-decoration-none text-secondary hover-link">Profil
+                                Toko</a></li>
                     </ul>
                 </div>
 
-                <!-- Middle - Social Links -->
+                <!-- Social Media -->
                 <div class="col-md-4 mb-4 mb-md-0 text-center">
                     <h3 class="mb-4 fw-bold" style="color: #284593;">Terhubung dengan kami</h3>
                     <div class="d-flex justify-content-center gap-4">
@@ -71,10 +136,10 @@
                     </div>
                 </div>
 
-                <!-- Right Side - Contact Info -->
+                <!-- Info Toko -->
                 <div class="col-md-4">
                     <div class="mb-4">
-                        <h3 class="mb-3 fw-bold" style="color: #284593;">Waktu Oprasional</h3>
+                        <h3 class="mb-3 fw-bold" style="color: #284593;">Waktu Operasional</h3>
                         <p class="mb-1 text-secondary">Senin - Sabtu : 08.00 - 20.00</p>
                         <p class="text-secondary">Minggu : 12.00 - 20.00</p>
                     </div>
@@ -93,8 +158,6 @@
             <small class="text-white-50">&copy; {{ date('Y') }} Bintang Serasi. All rights reserved.</small>
         </div>
     </div>
-
-    <!-- Custom Styles -->
     <style>
         /* Hover effect for social media icons */
         .social-icon {
@@ -108,24 +171,24 @@
             color: #284593;
             transition: all 0.3s ease;
         }
-        
+
         .social-icon:hover {
             background-color: #284593;
             color: white;
             transform: translateY(-5px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
-        
+
         /* Hover effect for navigation links */
         .hover-link {
             position: relative;
             transition: color 0.3s ease;
         }
-        
+
         .hover-link:hover {
             color: #284593 !important;
         }
-        
+
         .hover-link::after {
             content: '';
             position: absolute;
@@ -136,7 +199,7 @@
             background-color: #284593;
             transition: width 0.3s ease;
         }
-        
+
         .hover-link:hover::after {
             width: 100%;
         }

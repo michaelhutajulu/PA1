@@ -31,11 +31,6 @@
 
 </div>
 
-{{-- Tombol login modal (opsional, taruh di navbar juga bisa) --}}
-<div class="text-center mt-4">
-    <a href="javascript:void(0)" onclick="toggleLoginModal()" class="btn btn-outline-secondary">🔐 Login</a>
-</div>
-
 {{-- Modal Login --}}
 @include('components.modal-login')
 
