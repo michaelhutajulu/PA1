@@ -1,164 +1,188 @@
-<footer class="pt-5" style="background-color: #0d3b66; color: white;">
-    <div class="container">
-        <div class="row g-4">
-            <!-- MAP & INFO -->
-            <div class="col-md-6">
-                <h5 class="fw-bold mb-3">📍 Lokasi Bintang Serasi</h5>
-                <div class="rounded overflow-hidden shadow-sm mb-2">
+<footer style="background-color: #284593; color: white; padding-top: 60px; padding-bottom: 0;">
+    <div class="container pb-5">
+        <div class="row g-5">
+            <!-- Left Side - Map -->
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h2 class="fw-bold mb-4" style="font-size: 28px;">Lokasi Bintang Serasi</h2>
+                <div class="rounded overflow-hidden shadow-lg" style="border-radius: 15px;">
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3986.509434915169!2d99.05741557581437!3d2.3336297576225076!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x302e05c85050a295%3A0x8b693c398e4b46c7!2sToko%20Bintang%20Serasi!5e0!3m2!1sid!2sid!4v1743911151567!5m2!1sid!2sid"
                         width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade">
                     </iframe>
                 </div>
-                <p class="text-white-50 small mb-0">
-                    <i class="bi bi-geo-alt-fill text-danger me-1"></i> Lokasi kami sudah ditandai dengan ikon merah di
-                    peta.
-                </p>
             </div>
 
-            <!-- SARAN FORM -->
-            <div class="col-md-6">
-                <h5 class="fw-bold mb-2">💡 Saran & Masukan</h5>
-                <p class="text-white-50">Bantu kami berkembang dengan memberikan saran terbaik Anda.</p>
-                @if (session('success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
+            <!-- Right Side - Form -->
+            <div class="col-lg-6">
+                <h2 class="fw-bold mb-3" style="font-size: 28px;">Bantu kami dengan memberikan saran kepada Bintang Serasi</h2>
+                {{-- <p class="mb-4 text-white-50">Saran anda sangat kami apresiasi</p> --}}
 
-                @if (session('info'))
-                    <div class="alert alert-info alert-dismissible fade show" role="alert">
-                        {{ session('info') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
-
-                @if ($errors->any())
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
-
-                <form id="formSaran" action="{{ route('saran.kirim') }}" method="POST">
-                    @csrf
-                    <div class="mb-3">
-                        <textarea id="pesanSaran" name="pesan" rows="3" class="form-control rounded-3 shadow-sm border-0"
-                            placeholder="Ketikkan pesan anda..." required>{{ session('draft_saran', '') }}</textarea>
-                    </div>
-                    <button type="submit" class="btn btn-light fw-semibold px-4 rounded-pill">Kirim</button>
-                </form>
-            </div>
-
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    // Ambil form dan textarea
-                    const formSaran = document.getElementById('formSaran');
-                    const pesanSaran = document.getElementById('pesanSaran');
-
-                    // Periksa apakah ada draft tersimpan di localStorage
-                    const savedDraft = localStorage.getItem('saran_draft');
-                    if (savedDraft) {
-                        pesanSaran.value = savedDraft;
-                    }
-
-                    // Simpan draft saat pengguna mengetik
-                    pesanSaran.addEventListener('input', function() {
-                        localStorage.setItem('saran_draft', this.value);
-                    });
-
-                    // Tangani submit form
-                    formSaran.addEventListener('submit', function(e) {
-                        // Hapus draft dari localStorage jika user sudah login (untuk mencegah munculnya lagi)
-                        @if (Auth::check())
-                            // Tambahkan parameter untuk menandai sudah dari form saran
-                            // tapi JANGAN menghentikan proses submit normal
-                            localStorage.removeItem('saran_draft');
-                            localStorage.removeItem('from_saran');
-                            // PENTING: TIDAK ADA e.preventDefault() di sini
-                        @else
-                            // Jika belum login, kita tetap menyimpan draft
-                            localStorage.setItem('saran_draft', pesanSaran.value);
-                            // TIDAK ADA e.preventDefault() - biarkan form di-submit normal
-                        @endif
-                    });
-
-                    // Cek apakah user baru saja login dari form saran
-                    const fromSaran = localStorage.getItem('from_saran');
-                    if (fromSaran === 'true') {
-                        // Hapus flag
-                        localStorage.removeItem('from_saran');
-
-                        // Fokus ke textarea
-                        setTimeout(function() {
-                            pesanSaran.focus();
-                        }, 500);
-                    }
-                });
-            </script>
-
-            {{-- <div class="col-md-6">
-                <h5 class="fw-bold mb-3">ℹ️ Informasi Lanjutan :</h5>
-                <div class="text-white-50 small">
-                    <p><strong>No. Telepon:</strong> 0812-6466-7712</p>
-                    <p><strong>Waktu Operasional:</strong><br>
-                        Senin - Sabtu : 08.00 - 20.00<br>
-                        Minggu : 12.00 - 20.00
-                    </p>
+                <div class="bg-white p-4 rounded-2 shadow">
+                    <form id="formSaran" action="{{ route('saran.kirim') }}" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <textarea 
+                                name="pesan" 
+                                id="pesanSaran"
+                                rows="4" 
+                                class="form-control rounded-3 py-2 px-3" 
+                                placeholder="saran anda" 
+                                required
+                                style="resize: none; border-color: #e0e0e0; background-color: #f8f9fa;">{{ session('draft_saran', '') }}</textarea>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-dark rounded-pill fw-semibold px-4 py-2" style="background-color: #000;">Kirim</button>
+                        </div>
+                    </form>
                 </div>
-            </div> --}}
+            </div>
+        </div>
+    </div>
 
-
-            <!-- Divider -->
-            <hr class="my-4" style="border-color: rgba(255,255,255,0.1);">
-
-            <!-- LINK & SOSMED -->
-            <div class="row text-center text-md-start align-items-center">
-                <div class="col-md-6 mb-3">
-                    <h6 class="fw-bold text-white mb-3">⭐ Bintang Serasi</h6>
-                    <ul class="list-unstyled small">
-                        <li><a href="/" class="text-white text-decoration-none d-block mb-1">Beranda</a></li>
-                        <li><a href="/katalog" class="text-white text-decoration-none d-block mb-1">Katalog</a></li>
-                        <li><a href="/wishlist" class="text-white text-decoration-none d-block mb-1">Wishlist</a></li>
-                        <li><a href="/profil-toko" class="text-white text-decoration-none d-block mb-1">Profil Toko</a>
-                        </li>
+    <!-- Info Section with White Background -->
+    <div class="bg-white text-dark py-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Left Side - Links -->
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="me-2 fs-4" style="color: #284593;">⭐</span>
+                        <h3 class="mb-0 fw-bold" style="color: #284593;">Bintang Serasi</h3>
+                    </div>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="/" class="text-decoration-none text-secondary hover-link">Beranda</a></li>
+                        <li class="mb-2"><a href="/katalog" class="text-decoration-none text-secondary hover-link">Katalog</a></li>
+                        <li class="mb-2"><a href="/favorit" class="text-decoration-none text-secondary hover-link">Favorit</a></li>
+                        <li><a href="/profil-toko" class="text-decoration-none text-secondary hover-link">Profil Toko</a></li>
                     </ul>
                 </div>
 
-                <div class="col-md-6">
-                    <h6 class="fw-bold text-white mb-3">🌐 Terhubung dengan kami</h6>
-                    <div class="d-flex justify-content-center justify-content-md-start gap-3">
-                        <a href="#" class="text-white fs-4 hover-social"><i class="bi bi-instagram"></i></a>
-                        <a href="#" class="text-white fs-4 hover-social"><i class="bi bi-facebook"></i></a>
-                        <a href="#" class="text-white fs-4 hover-social"><i class="bi bi-envelope-fill"></i></a>
+                <!-- Middle - Social Links -->
+                <div class="col-md-4 mb-4 mb-md-0 text-center">
+                    <h3 class="mb-4 fw-bold" style="color: #284593;">Terhubung dengan kami</h3>
+                    <div class="d-flex justify-content-center gap-4">
+                        <a href="#" class="social-icon">
+                            <i class="bi bi-instagram fs-2"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="bi bi-facebook fs-2"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Side - Contact Info -->
+                <div class="col-md-4">
+                    <div class="mb-4">
+                        <h3 class="mb-3 fw-bold" style="color: #284593;">Waktu Oprasional</h3>
+                        <p class="mb-1 text-secondary">Senin - Sabtu : 08.00 - 20.00</p>
+                        <p class="text-secondary">Minggu : 12.00 - 20.00</p>
+                    </div>
+                    <div>
+                        <h3 class="mb-3 fw-bold" style="color: #284593;">No. Telepon</h3>
+                        <p class="text-secondary">0812-6466-7712</p>
                     </div>
                 </div>
             </div>
-
-            <!-- COPYRIGHT -->
-            <div class="text-center mt-4 pt-3 border-top border-light-subtle small"
-                style="color: rgba(255,255,255,0.6);">
-                &copy; {{ date('Y') }} Bintang Serasi. All rights reserved.
-            </div>
         </div>
+    </div>
 
-        <!-- Efek Hover Sosial Media -->
-        <style>
-            .hover-social {
-                transition: color 0.4s ease, transform 0.4s ease;
+    <!-- Copyright Section -->
+    <div class="container">
+        <div class="py-4 text-center">
+            <small class="text-white-50">&copy; {{ date('Y') }} Bintang Serasi. All rights reserved.</small>
+        </div>
+    </div>
+
+    <!-- Custom Styles -->
+    <style>
+        /* Hover effect for social media icons */
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            color: #284593;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background-color: #284593;
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Hover effect for navigation links */
+        .hover-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .hover-link:hover {
+            color: #284593 !important;
+        }
+        
+        .hover-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #284593;
+            transition: width 0.3s ease;
+        }
+        
+        .hover-link:hover::after {
+            width: 100%;
+        }
+    </style>
+
+    <!-- Script for form handling -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ambil form dan textarea
+            const formSaran = document.getElementById('formSaran');
+            const pesanSaran = document.getElementById('pesanSaran');
+
+            // Periksa apakah ada draft tersimpan di localStorage
+            const savedDraft = localStorage.getItem('saran_draft');
+            if (savedDraft) {
+                pesanSaran.value = savedDraft;
             }
 
-            .hover-social:hover {
-                color: #ffdd95 !important;
-                /* Warna lembut: pastel gold */
-                transform: translateY(-4px);
-                /* Geser sedikit ke atas dengan lembut */
+            // Simpan draft saat pengguna mengetik
+            pesanSaran.addEventListener('input', function() {
+                localStorage.setItem('saran_draft', this.value);
+            });
+
+            // Tangani submit form
+            formSaran.addEventListener('submit', function(e) {
+                // Hapus draft dari localStorage jika user sudah login
+                @if (Auth::check())
+                    localStorage.removeItem('saran_draft');
+                    localStorage.removeItem('from_saran');
+                @else
+                    // Jika belum login, kita tetap menyimpan draft
+                    localStorage.setItem('saran_draft', pesanSaran.value);
+                @endif
+            });
+
+            // Cek apakah user baru saja login dari form saran
+            const fromSaran = localStorage.getItem('from_saran');
+            if (fromSaran === 'true') {
+                // Hapus flag
+                localStorage.removeItem('from_saran');
+
+                // Fokus ke textarea
+                setTimeout(function() {
+                    pesanSaran.focus();
+                }, 500);
             }
-        </style>
+        });
+    </script>
 </footer>
