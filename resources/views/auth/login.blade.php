@@ -75,31 +75,9 @@
             color: #ffb3b3;
         }
 
-        /* 🔹 Tombol kembali */
-.back-btn {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    background: transparent;
-    border: 1px solid rgba(252, 252, 252, 0.53);
-    border-radius: 5px;
-    padding: 8px 16px;
-    color: #fff;
-    font-size: 14px;
-    cursor: pointer;
-    backdrop-filter: blur(4px);
-    transition: all 0.3s ease;
-}
-.back-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.5);
-}
-
     </style>
 </head>
 <body>
-            <!-- 🔙 Tombol Kembali -->
-            <button class="back-btn" onclick="window.history.back()">← Kembali</button>
     <div class="card">
 
 
