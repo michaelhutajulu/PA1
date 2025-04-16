@@ -11,10 +11,17 @@
         </div>
     @endif
 
-    <h3 class="fw-bold mb-4 text-center">
-        Hasil pencarian untuk: "{{ $query }}"
-    </h3>
+    {{-- Tampilkan saran jika tidak ada hasil dan ada rekomendasi --}}
+    @if($products->isEmpty() && isset($suggestion))
+        <div class="alert alert-info text-center">
+            Mungkin maksud Anda:
+            <a href="{{ route('search') }}?query={{ urlencode($suggestion) }}" class="text-decoration-underline">
+                {{ $suggestion }}
+            </a>
+        </div>
+    @endif
 
+    {{-- Tampilkan produk jika ada --}}
     @if($products->isEmpty())
         <p class="text-center">Produk tidak ditemukan.</p>
     @else
