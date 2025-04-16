@@ -1,8 +1,8 @@
 <footer style="background-color: #284593; color: white; padding-top: 60px; padding-bottom: 0;">
     <div class="container pb-5">
-        <div class="row g-5">
+        <div class="row g-5 align-items-start">
             <!-- Google Map -->
-            <div class="col-lg-6 mb-4 mb-lg-0">
+            <div class="col-lg-5 mb-4 mb-lg-0">
                 <h2 class="fw-bold mb-4" style="font-size: 28px;">Lokasi Bintang Serasi</h2>
                 <div class="rounded overflow-hidden shadow-lg" style="border-radius: 15px;">
                     <iframe
@@ -14,10 +14,9 @@
             </div>
 
             <!-- Kritik dan Saran -->
-            <div class="col-lg-6">
-                <h2 class="fw-bold mb-3" style="font-size: 28px;">Bantu kami dengan memberikan saran kepada Bintang
-                    Serasi</h2>
-                <div class="bg-white p-4 rounded-2 shadow">
+            <div class="col-lg-5 offset-lg-2">
+                <h2 class="fw-bold mb-3" style="font-size: 28px;">Bantu kami dengan memberikan saran</h2>
+                <div class="bg-white p-4 rounded-2 shadow" style="max-width: 450px;">
                     <!-- Alert Messages -->
                     @if (session('success'))
                         <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
@@ -49,56 +48,50 @@
                     <form id="formSaran" action="{{ route('saran.kirim') }}" method="POST">
                         @csrf
                         <div class="mb-3">
-                            <textarea name="pesan" id="pesanSaran" rows="4" class="form-control rounded-3 py-2 px-3"
-                                placeholder="Saran Anda" required style="resize: none; border-color: #e0e0e0; background-color: #f8f9fa;">{{ session('draft_saran', '') }}</textarea>
+                            <textarea name="pesan" id="pesanSaran" class="form-control rounded-3 py-2 px-3" placeholder="Saran Anda" required
+                                style="resize: none; border-color: #e0e0e0; background-color: #f8f9fa; height: 130px; max-height: 130px; overflow-y: auto;">{{ session('draft_saran', '') }}</textarea>
                         </div>
                         <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn custom-submit-btn rounded-pill fw-semibold px-4 py-2">
-                                Kirim
+                            <button type="submit"
+                                class="btn rounded-pill fw-semibold px-4 py-2 shadow text-white border-0"
+                                style="background: linear-gradient(45deg, #284593, #376fa7);">
+                                <span class="d-flex align-items-center gap-2">
+                                    <span>Kirim</span>
+                                    <i class="bi bi-arrow-right-circle"></i>
+                                </span>
                             </button>
                         </div>
-
-                        <style>
-                            .custom-submit-btn {
-                                background-color: #000;
-                                color: white;
-                                border: none;
-                                transition: all 0.3s ease;
-                                position: relative;
-                                overflow: hidden;
-                                z-index: 1;
-                            }
-
-                            .custom-submit-btn::before {
-                                content: '';
-                                position: absolute;
-                                top: 0;
-                                left: -100%;
-                                width: 100%;
-                                height: 100%;
-                                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-                                z-index: -1;
-                            }
-
-                            .custom-submit-btn:hover {
-                                background-color: #284593;
-                                transform: translateY(-3px);
-                                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-                            }
-
-                            .custom-submit-btn:hover::before {
-                                left: 100%;
-                            }
-
-                            .custom-submit-btn:active {
-                                transform: translateY(-1px);
-                                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-                            }
-                        </style>
                     </form>
                 </div>
             </div>
         </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const textarea = document.getElementById('pesanSaran');
+
+            textarea.addEventListener('focus', function() {
+                this.style.outline = 'none';
+                this.style.borderColor = '#376fa7';
+            });
+
+            textarea.addEventListener('blur', function() {
+                this.style.borderColor = '#e0e0e0';
+            });
+
+            const alerts = document.querySelectorAll('.alert');
+
+            // Atur timeout untuk menghilangkannya setelah 5 detik
+            alerts.forEach(function(alert) {
+                setTimeout(function() {
+                    const bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                }, 5000); // 5000 ms = 5 detik
+            });
+        });
+    </script>
+    </div>
     </div>
 
     <!-- Informasi Toko -->
@@ -138,16 +131,16 @@
 
                 <!-- Info Toko -->
                 <div class="col-md-4">
-                <h5 style="color: #284593;"><strong>Informasi Toko</strong></h5>
-                <hr>
-                <p class="fw-semibold" style="color: #284593;">Waktu Operasional</p>
-                <p>Senin - Sabtu : 08.00 - 20.00</p>
-                <p>Minggu : 12.00 - 20.00</p>
-                <p id="status-operasional" class="fw-semibold mt-2" style="color: #284593;"></p>
+                    <h5 style="color: #284593;"><strong>Informasi Toko</strong></h5>
+                    <hr>
+                    <p class="fw-semibold" style="color: #284593;">Waktu Operasional</p>
+                    <p>Senin - Sabtu : 08.00 - 20.00</p>
+                    <p>Minggu : 12.00 - 20.00</p>
+                    <p id="status-operasional" class="fw-semibold mt-2" style="color: #284593;"></p>
 
-                <p class="fw-semibold mt-4" style="color: #284593;">No. Telepon</p>
-                <p>0812-6466-7712</p>
-            </div>
+                    <p class="fw-semibold mt-4" style="color: #284593;">No. Telepon</p>
+                    <p>0812-6466-7712</p>
+                </div>
             </div>
         </div>
     </div>
@@ -273,10 +266,11 @@
                     minute: '2-digit',
                 });
 
-                statusElement.innerHTML = `Hari ini: <strong>${today}</strong>, pukul <strong>${timeFormatted}</strong> — ` +
-                    (isOpen
-                        ? '<span style="color: green;">Sedang Buka</span>'
-                        : '<span style="color: red;">Tutup</span>');
+                statusElement.innerHTML =
+                    `Hari ini: <strong>${today}</strong>, pukul <strong>${timeFormatted}</strong> — ` +
+                    (isOpen ?
+                        '<span style="color: green;">Sedang Buka</span>' :
+                        '<span style="color: red;">Tutup</span>');
             }
 
             updateStatus();
