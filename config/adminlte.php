@@ -347,8 +347,15 @@ return [
                 'text' => 'Toko',
                 'url'  => 'admin/store_profile',
             ],
-        ],
+        ],  
     ],
+
+    [
+        'text' => 'Lihat Website',
+        'url'  => '/',
+        'icon' => 'fas fa-globe',
+    ],
+    
     
 
 

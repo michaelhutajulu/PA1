@@ -1,7 +1,7 @@
 <!-- resources/views/components/modal-register.blade.php -->
 <div id="registerModal" class="modal-login-overlay" style="display: none;">
     <div class="modal-login-card">
-        <button onclick="toggleRegisterModal()" class="back-btn">&times;</button>
+        <button onclick="closeRegisterModal()" class="back-btn">&times;</button>
 
         <h2>Register</h2>
 
