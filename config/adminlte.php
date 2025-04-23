@@ -301,7 +301,7 @@ return [
     'menu' => [
         // Navbar items:
         [
-            'text' => 'Dashboard',
+            'text' => 'Beranda',
             'route' => 'dashboard',
             'icon' => 'fas fa-tachometer-alt',
             'topnav' => true, // Ini akan tampil di navbar atas kiri
@@ -322,32 +322,17 @@ return [
     [
         'text' => 'Produk',
         'icon' => 'fas fa-boxes',
-        'submenu' => [
-            [
-                'text' => 'Semua Produk',
-                'url'  => 'admin/products',
-            ],
-        ],
+        'url'  => 'admin/products',
     ],
     [
         'text' => 'Kategori',
         'icon' => 'fas fa-tags',
-        'submenu' => [
-            [
-                'text' => 'Semua Kategori',
-                'url'  => 'admin/categories',
-            ],
-        ],
+        'url'  => 'admin/categories',
     ],
     [
         'text' => 'Profil Toko',
         'icon' => 'fas fa-store',
-        'submenu' => [
-            [
-                'text' => 'Toko',
-                'url'  => 'admin/store_profile',
-            ],
-        ],  
+        'url'  => 'admin/store_profile',
     ],
 
     [
