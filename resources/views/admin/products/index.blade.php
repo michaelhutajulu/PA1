@@ -5,6 +5,25 @@
 @section('content-admin')
     <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Tambah Produk</a>
 
+    {{-- Search Bar untuk Admin --}}
+    <form class="mb-3" role="search" action="{{ route('admin.products.search') }}" method="GET">
+        <div class="input-group w-50">
+            <input class="form-control rounded-start" type="search" name="query" value="{{ request('query') }}" placeholder="Cari produk...">
+            <button class="btn btn-outline-secondary rounded-end" type="submit">
+                <i class="bi bi-search"></i>
+            </button>
+        </div>
+    </form>
+
+    {{-- Info hasil pencarian dan saran --}}
+    @if (isset($query))
+        <div class="mb-3">
+            <strong>Hasil pencarian untuk:</strong> "{{ $query }}"
+
+        </div>
+    @endif
+
+    {{-- Tabel Produk --}}
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -17,7 +36,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($products as $item)
+            @forelse ($products as $item)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->name }}</td>
@@ -32,7 +51,11 @@
                         </form>
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="6" class="text-center">Produk tidak ditemukan.</td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
 @stop

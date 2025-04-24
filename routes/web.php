@@ -53,6 +53,8 @@ Route::prefix('admin')->middleware(['auth', 'isadmin'])->group(function () {
     Route::post('store_profile', [StoreProfileController::class, 'store'])->name('store_profile.store');
     Route::get('store_profile/edit', [StoreProfileController::class, 'edit'])->name('store_profile.edit');
     Route::put('store_profile', [StoreProfileController::class, 'update'])->name('store_profile.update');
+    Route::get('/admin/products/search', [ProductController::class, 'searchAdmin'])->name('admin.products.search');
+
 });
 
 // ==========================================

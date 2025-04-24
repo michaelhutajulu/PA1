@@ -111,5 +111,46 @@ public function favorit()
     return view('favorites.index', compact('favorites'));
 }
 
+public function searchAdmin(Request $request)
+{
+    $query = $request->input('query');
+
+    if (!$query || trim($query) === '') {
+        return redirect()->route('products.index')->with('error', 'Masukkan kata kunci untuk mencari produk.');
+    }
+
+    $products = Product::with('category')
+        ->where('name', 'like', '%' . $query . '%')
+        ->get();
+
+    $keywords = ['sepeda', 'kulkas', 'tv', 'mesin cuci', 'laptop', 'handphone', 'kompor', 'kipas angin', 'kamera'];
+
+    $suggestion = null;
+
+    if ($products->isEmpty()) {
+        $closest = null;
+        $shortest = -1;
+
+        foreach ($keywords as $keyword) {
+            $lev = levenshtein(strtolower($query), strtolower($keyword));
+
+            if ($lev <= strlen($query) / 2 && ($lev < $shortest || $shortest < 0)) {
+                $closest = $keyword;
+                $shortest = $lev;
+            }
+        }
+
+        if ($closest) {
+            $suggestion = $closest;
+        }
+    }
+
+    return view('admin.products.index', [
+        'products' => $products,
+        'query' => $query,
+        'suggestion' => $suggestion,
+    ]);
+}
+
 
 }
