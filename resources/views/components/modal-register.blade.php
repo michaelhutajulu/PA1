@@ -3,7 +3,7 @@
     <div class="modal-login-card">
         <button onclick="closeRegisterModal()" class="back-btn">&times;</button>
 
-        <h2>Register</h2>
+        <h2>Daftar Akun</h2>
 
         @if(session('error'))
             <div class="alert">{{ session('error') }}</div>
@@ -21,16 +21,16 @@
                 <input type="email" name="email" placeholder="Email" required>
             </div>
             <div class="input-group">
-                <input type="password" name="password" placeholder="Password" required>
+                <input type="password" name="password" placeholder="Kata Sandi" required>
             </div>
             <div class="input-group">
-                <input type="password" name="password_confirmation" placeholder="Konfirmasi Password" required>
+                <input type="password" name="password_confirmation" placeholder="Konfirmasi Kata Sandi" required>
             </div>
             <button type="submit" class="btn">Daftar</button>
         </form>
 
         <div class="text-center">
-            Sudah punya akun? <a href="javascript:void(0);" onclick="toggleLogin()">Login</a>
+            Sudah punya akun? <a href="javascript:void(0);" onclick="toggleLogin()">Masuk</a>
         </div>
     </div>
 </div>

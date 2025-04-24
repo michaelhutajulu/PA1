@@ -11,9 +11,10 @@
         </div>
     @endif
 
-    {{-- Tampilkan saran jika tidak ada hasil dan ada rekomendasi --}}
-    @if($products->isEmpty() && isset($suggestion))
+    {{-- Tampilkan saran jika ada dan produk tidak ditemukan --}}
+    @if($products->isEmpty() && $suggestion)
         <div class="alert alert-info text-center">
+            <strong>Tidak ada hasil untuk:</strong> "{{ $query }}"<br>
             Mungkin maksud Anda:
             <a href="{{ route('search') }}?query={{ urlencode($suggestion) }}" class="text-decoration-underline">
                 {{ $suggestion }}
@@ -21,10 +22,17 @@
         </div>
     @endif
 
+    {{-- Tampilkan pesan jika produk tidak ditemukan dan tidak ada saran --}}
+    @if($products->isEmpty() && !$suggestion)
+        <p class="text-center">Produk dengan kata kunci <strong>"{{ $query }}"</strong> tidak ditemukan.</p>
+    @endif
+
     {{-- Tampilkan produk jika ada --}}
-    @if($products->isEmpty())
-        <p class="text-center">Produk tidak ditemukan.</p>
-    @else
+    @if(!$products->isEmpty())
+        <div class="mb-3">
+            <h5>Hasil pencarian untuk: <strong>{{ $query }}</strong></h5>
+        </div>
+
         <div class="row">
             @foreach($products as $product)
                 <div class="col-md-3 mb-4">
