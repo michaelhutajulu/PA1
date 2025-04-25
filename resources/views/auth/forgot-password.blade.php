@@ -172,7 +172,7 @@
                 <div class="input-group">
                     <input type="email" name="email" placeholder="Email" required>
                 </div>
-                <button class="btn" type="submit">Kirim Link Reset</button>
+                <button class="btn" type="submit">Konfirmasi</button>
             </form>
 
             <div class="back-btn">
