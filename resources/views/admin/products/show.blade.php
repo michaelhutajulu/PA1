@@ -82,8 +82,12 @@
                 @else
                     // Simpan URL sekarang ke sessionStorage
                     sessionStorage.setItem('redirect_after_login', window.location.href);
-                    // Arahkan ke halaman login
-                    window.location.href = '{{ route("login") }}';
+                    // Tampilkan modal login, bukan redirect
+                    if (typeof toggleLoginModal === 'function') {
+                        toggleLoginModal();
+                    } else {
+                        console.error("Fungsi toggleLoginModal() tidak ditemukan.");
+                    }
                 @endif
             });
         }
