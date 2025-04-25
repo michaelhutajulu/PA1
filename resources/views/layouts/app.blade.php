@@ -149,8 +149,7 @@
 
     .custom-card:hover {
         transform: translateY(-10px) scale(1.03);
-        box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
-        border-color: #00f0ff;
+        box-shadow: 0 0 20px rgba(119, 121, 122, 0.5);
     }
 
     /* === Zoom image effect === */
@@ -170,29 +169,7 @@
     .custom-card:hover .product-image {
         transform: scale(1.1);
     }
-
-    /* === Shine overlay === */
-    .shine-overlay {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-            120deg,
-            transparent,
-            rgba(255, 255, 255, 0.4),
-            transparent
-        );
-        z-index: 2;
-        transition: all 0.6s ease-in-out;
-    }
-
-    .custom-card:hover .shine-overlay {
-        left: 100%;
-    }
-
+    
     /* === Fade-in animation === */
     .fade-in {
         animation: fadeInUp 0.6s ease-in-out both;
