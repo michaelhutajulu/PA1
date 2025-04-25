@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SaranController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\ForgotPasswordController;
 
 // ==========================================
 // 🔵 1. HALAMAN BERANDA UNTUK USER (dengan data produk)
@@ -66,3 +67,15 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
+
+// Form untuk verifikasi nama dan email
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showVerifyForm'])->name('forgot.password');
+
+// Proses verifikasi nama dan email
+Route::post('/forgot-password', [ForgotPasswordController::class, 'verifyUser'])->name('forgot.password.verify');
+
+// Form ubah password (jika nama & email valid)
+Route::get('/reset-password/{email}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset.form');
+
+// Proses update password baru
+Route::post('/reset-password/{email}', [ForgotPasswordController::class, 'updatePassword'])->name('password.reset.update');

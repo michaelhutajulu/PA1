@@ -74,13 +74,19 @@
             border-radius: 8px;
             color: #ffb3b3;
         }
-
+        .forgot-password {
+            text-align: right;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+        .forgot-password a {
+            font-size: 13px;
+            color: #e0f0ff;
+        }
     </style>
 </head>
 <body>
     <div class="card">
-
-
         <h2>Login</h2>
 
         @if(session('error'))
@@ -98,6 +104,11 @@
             <div class="input-group">
                 <input type="password" name="password" placeholder="Password" required>
             </div>
+
+            <div class="forgot-password">
+                <a href="{{ route('forgot.password') }}">Lupa Kata Sandi?</a>
+            </div>
+
             <button class="btn" type="submit">Login</button>
         </form>
 

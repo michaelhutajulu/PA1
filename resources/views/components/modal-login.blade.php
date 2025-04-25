@@ -19,6 +19,9 @@
             <div class="input-group">
                 <input type="password" name="password" placeholder="Kata Sandi" required>
             </div>
+            <div class="forgot-password">
+                <a href="{{ route('forgot.password') }}">Lupa Kata Sandi?</a>
+            </div>
             <button class="btn" type="submit">Masuk</button>
         </form>
 
