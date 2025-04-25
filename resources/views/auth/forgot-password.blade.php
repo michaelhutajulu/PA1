@@ -17,7 +17,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(120deg, #f7a07a, #ff914d);
+            background: linear-gradient(120deg, #6ec6ff, #1e88e5);
             overflow: hidden;
         }
 
@@ -75,13 +75,13 @@
 
         .input-group input:focus {
             background: #fff;
-            border-color: #ff914d;
+            border-color: #1e88e5;
         }
 
         .btn {
             width: 100%;
             padding: 16px;
-            background: #ff914d;
+            background: #1e88e5;
             border: none;
             border-radius: 12px;
             color: #fff;
@@ -92,7 +92,7 @@
         }
 
         .btn:hover {
-            background: #ff7f29;
+            background: #1565c0;
             transform: scale(1.05);
         }
 
@@ -103,14 +103,14 @@
 
         .back-btn a {
             font-size: 16px;
-            color: #ff914d;
+            color: #1e88e5;
             text-decoration: none;
             font-weight: 600;
             transition: color 0.3s ease;
         }
 
         .back-btn a:hover {
-            color: #ff7f29;
+            color: #1565c0;
         }
 
         .welcome-text {
