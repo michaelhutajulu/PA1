@@ -35,7 +35,7 @@ class SaranController extends Controller
             'pesan' => $request->pesan,
         ];
 
-        Mail::to('siagianrizal02@gmail.com')->send(new \App\Mail\SaranMail($data));
+        Mail::to('bintangserasi01@gmail.com')->send(new \App\Mail\SaranMail($data));
 
         // Hapus draft dari session jika ada
         Session::forget('draft_saran');
