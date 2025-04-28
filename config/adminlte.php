@@ -300,12 +300,6 @@ return [
 
     'menu' => [
         // Navbar items:
-        [
-            'text' => 'Beranda',
-            'route' => 'dashboard',
-            'icon' => 'fas fa-tachometer-alt',
-            'topnav' => true, // Ini akan tampil di navbar atas kiri
-        ],
 
         [
             'type' => 'fullscreen-widget',
@@ -318,6 +312,11 @@ return [
             'text' => 'blog',
             'url' => 'admin/blog',
             'can' => 'manage-blog',
+        ],
+        [
+            'text' => 'Beranda',
+            'route' => 'dashboard',
+            'icon' => 'fas fa-tachometer-alt',
         ],
     [
         'text' => 'Produk',
@@ -336,7 +335,7 @@ return [
     ],
 
     [
-        'text' => 'Lihat Website',
+        'text' => 'Website',
         'url'  => '/',
         'icon' => 'fas fa-globe',
     ],

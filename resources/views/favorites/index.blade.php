@@ -12,19 +12,21 @@
         <div class="row" id="favorites-container">
             @foreach($favorites as $product)
                 <div class="col-md-3 mb-4">
-                    <div class="card h-100 border-0 custom-card product-card">
-                        <div class="image-container">
-                            <img src="{{ asset('storage/' . $product->image) }}" class="product-image" 
-                                alt="{{ $product->name }}">
+                    <a href="{{ route('admin.products.show', $product->id) }}" 
+                       onclick="sessionStorage.setItem('back_url', window.location.href)" 
+                       class="text-decoration-none text-dark">
+                        <div class="card h-100 border-0 custom-card product-card">
+                            <div class="image-container">
+                                <img src="{{ asset('storage/' . $product->image) }}" class="product-image" 
+                                    alt="{{ $product->name }}">
+                            </div>
+                            <div class="card-body d-flex flex-column align-items-center">
+                                <h5 class="card-title text-center">{{ $product->name }}</h5>
+                                <p class="card-text text-primary fw-bold">Rp. {{ number_format($product->price, 0, ',', '.') }}</p>
+                                <!-- Tombol Detail dihapus karena seluruh card sudah bisa diklik -->
+                            </div>
                         </div>
-                        <div class="card-body d-flex flex-column align-items-center">
-                            <h5 class="card-title text-center">{{ $product->name }}</h5>
-                            <p class="card-text text-primary fw-bold">Rp. {{ number_format($product->price, 0, ',', '.') }}</p>
-                            <a href="{{ route('admin.products.show', $product->id) }}"
-                               onclick="sessionStorage.setItem('back_url', window.location.href)"
-                               class="btn btn-outline-primary mt-auto detail-btn w-100">Detail</a>
-                        </div>
-                    </div>
+                    </a>
                 </div>
             @endforeach
         </div>
@@ -71,4 +73,4 @@
         transform: scale(1.1);
     }
 </style>
- @endsection
+@endsection
