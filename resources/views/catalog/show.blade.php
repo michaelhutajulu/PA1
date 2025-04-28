@@ -5,25 +5,25 @@
     <h3 class="fw-bold text-center mb-5">Produk Kategori: {{ $category->name }}</h3>
     
     @if ($products->count() > 0)
-        <div class="row">
-            @foreach($products as $product)
-            <div class="col-md-3 mb-4">
-                <div class="product-card h-100">
-                    <div class="card-image-container">
-                        <img src="{{ asset('storage/' . $product->image) }}" class="product-image" alt="{{ $product->name }}">
-                    </div>
-                    <div class="card-content">
-                        <h5 class="product-title">{{ $product->name }}</h5>
-                        <div class="price">Rp. {{ number_format($product->price, 0, ',', '.') }}</div>
-                        <a href="{{ route('admin.products.show', $product->id) }}" class="detail-link">
-                            <span>Detail</span>
-                            <i class="arrow-icon">→</i>
-                        </a>
-                    </div>
+    <div class="row">
+    @foreach($products as $product)
+    <div class="col-md-3 mb-4">
+        <a href="{{ route('admin.products.show', $product->id) }}" class="text-decoration-none text-dark">
+            <div class="product-card h-100">
+                <div class="card-image-container">
+                    <img src="{{ asset('storage/' . $product->image) }}" class="product-image" alt="{{ $product->name }}">
+                </div>
+                <div class="card-content">
+                    <h5 class="product-title">{{ $product->name }}</h5>
+                    <div class="price">Rp. {{ number_format($product->price, 0, ',', '.') }}</div>
+                    <!-- Menghapus tombol "Detail" karena seluruh card sudah menjadi link -->
                 </div>
             </div>
-            @endforeach
-        </div>
+        </a>
+    </div>
+    @endforeach
+</div>
+
     @else
         <div class="alert alert-info text-center">
             Belum ada produk dalam kategori ini.

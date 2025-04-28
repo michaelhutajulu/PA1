@@ -16,24 +16,24 @@
     </div>
 
     {{-- Cari Produk --}}
-    <h4 class="fw-bold text-center mb-0">Mau cari apa hari ini?</h4>
+    <h4 class="fw-bold text-center mb-4">Mau cari apa hari ini?</h4>
 
     <div class="row justify-content-center mb-5">
         @foreach($featuredProducts as $product)
         <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-            <div class="custom-card h-100 fade-in">
-                <div class="image-container">
-                    <img src="{{ asset('storage/' . $product->image) }}" 
-                         class="product-image" 
-                         alt="{{ $product->name }}">
+            <a href="{{ route('admin.products.show', $product->id) }}" class="text-decoration-none text-dark">
+                <div class="featured-card h-100 fade-in">
+                    <div class="image-container">
+                        <img src="{{ asset('storage/' . $product->image) }}" 
+                             class="product-image" 
+                             alt="{{ $product->name }}">
+                    </div>
+                    <div class="card-body text-center">
+                        <h6 class="card-title fw-bold mb-2">{{ $product->name }}</h6>
+                        <p class="text-muted small mb-0">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                    </div>
                 </div>
-                <div class="card-body text-center">
-                    <h6 class="card-title fw-bold">{{ $product->name }}</h6>
-                    <p class="text-muted small">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
-                    <a href="{{ route('admin.products.show', $product->id) }}" 
-                       class="btn btn-outline-primary btn-sm">Detail</a>
-                </div>
-            </div>
+            </a>
         </div>
         @endforeach
     </div>
@@ -43,19 +43,19 @@
     <div class="row">
         @foreach($productsPerCategory as $product)
         <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-            <div class="custom-card h-100 position-relative overflow-hidden fade-in">
-                <div class="image-container">
-                    <img src="{{ asset('storage/' . $product->image) }}" 
-                         class="product-image" 
-                         alt="{{ $product->name }}">
+            <a href="{{ route('admin.products.show', $product->id) }}" class="text-decoration-none text-dark">
+                <div class="featured-card h-100 fade-in">
+                    <div class="image-container">
+                        <img src="{{ asset('storage/' . $product->image) }}" 
+                             class="product-image" 
+                             alt="{{ $product->name }}">
+                    </div>
+                    <div class="card-body text-center">
+                        <h6 class="card-title fw-bold mb-2">{{ $product->name }}</h6>
+                        <p class="text-muted small mb-0">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                    </div>
                 </div>
-                <div class="card-body text-center">
-                    <h5 class="card-title mb-2">{{ $product->name }}</h5>
-                    <p class="text-muted">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
-                    <a href="{{ route('admin.products.show', $product->id) }}" 
-                       class="btn btn-outline-primary btn-sm">Detail</a>
-                </div>
-            </div>
+            </a>
         </div>
         @endforeach
     </div>
