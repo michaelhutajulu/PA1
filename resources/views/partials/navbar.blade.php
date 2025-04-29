@@ -75,10 +75,6 @@
         transition: all 0.3s ease;
     }
 
-    .navbar-brand:hover img {
-        transform: rotate(5deg);
-    }
-
     .custom-search-btn {
         transition: all 0.2s ease;
     }
@@ -136,14 +132,15 @@
     <div class="container d-flex align-items-center">
         {{-- Kiri: Logo --}}
         <a class="navbar-brand text-white fw-bold d-flex align-items-center me-4" href="{{ route('home') }}">
-            <div class="bg-white rounded-circle p-1 me-2 d-flex align-items-center justify-content-center shadow-sm"
-                style="height: 38px; width: 38px; transition: all 0.3s ease;">
-                <img src="{{ asset('logo.png') }}" alt="Logo" style="height: 30px; transition: all 0.3s ease;">
+            <div class="rounded-circle me-2 d-flex align-items-center justify-content-center"
+                 style="height: 38px; width: 38px;">
+                <img src="{{ asset('logo.png') }}" alt="Logo Bintang Serasi"
+                     style="height: 30px; object-fit: contain;">
             </div>
             <span style="letter-spacing: 0.5px;">Bintang Serasi</span>
         </a>
 
-        {{-- Tengah: Search Bar --}}
+                {{-- Tengah: Search Bar --}}
         <form class="flex-grow-1 me-4 d-none d-md-block" role="search" action="{{ route('search') }}" method="GET">
             <div class="input-group position-relative">
                 <input class="form-control rounded-pill px-4 border-0 shadow-sm" type="search" name="query"
