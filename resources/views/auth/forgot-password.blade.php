@@ -126,7 +126,7 @@
         </form>
 
         <div class="back-btn">
-            <a href="{{ route('login') }}">Kembali ke Login</a>
+            <a href="{{ route('home') }}">Kembali ke Login</a>
         </div>
     </div>
 </body>
