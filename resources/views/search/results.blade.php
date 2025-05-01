@@ -1,9 +1,64 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-5">
+<style>
+    .product-card {
+        border-radius: 12px;
+        background: #fff;
+        overflow: hidden;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 
+                    0 4px 6px -2px rgba(0, 0, 0, 0.02);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        position: relative;
+        cursor: pointer;
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
 
-    {{-- Tampilkan pesan error jika ada --}}
+    .product-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+                    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .card-image-container {
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .product-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .product-card:hover .product-image {
+        transform: scale(1.07);
+    }
+
+    .card-content {
+        padding: 16px;
+        text-align: center;
+    }
+
+    .product-title {
+        font-weight: 600;
+        font-size: 1rem;
+        color: #333;
+        margin-bottom: 8px;
+    }
+
+    .price {
+        color: #2563eb;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+</style>
+
+<div class="container mt-5">
     @if(session('error'))
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
             {{ session('error') }}
@@ -11,7 +66,6 @@
         </div>
     @endif
 
-    {{-- Tampilkan saran jika ada dan produk tidak ditemukan --}}
     @if($products->isEmpty() && $suggestion)
         <div class="alert alert-info text-center">
             <strong>Tidak ada hasil untuk:</strong> "{{ $query }}"<br>
@@ -22,12 +76,10 @@
         </div>
     @endif
 
-    {{-- Tampilkan pesan jika produk tidak ditemukan dan tidak ada saran --}}
     @if($products->isEmpty() && !$suggestion)
         <p class="text-center">Produk dengan kata kunci <strong>"{{ $query }}"</strong> tidak ditemukan.</p>
     @endif
 
-    {{-- Tampilkan produk jika ada --}}
     @if(!$products->isEmpty())
         <div class="mb-3">
             <h5>Hasil pencarian untuk: <strong>{{ $query }}</strong></h5>
@@ -36,14 +88,15 @@
         <div class="row">
             @foreach($products as $product)
                 <div class="col-md-3 mb-4">
-                    <div class="card shadow-sm h-100">
-                        <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top" alt="{{ $product->name }}" style="height: 200px; object-fit: cover;">
-                        <div class="card-body text-center">
-                            <h5>{{ $product->name }}</h5>
-                            <p class="text-muted">Rp. {{ number_format($product->price, 0, ',', '.') }}</p>
-                            <a href="{{ route('admin.products.show', $product->id) }}" class="btn btn-outline-primary btn-sm">Detail</a>
+                    <a href="{{ route('products.show', $product->id) }}" class="product-card">
+                        <div class="card-image-container">
+                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="product-image">
                         </div>
-                    </div>
+                        <div class="card-content">
+                            <div class="product-title">{{ $product->name }}</div>
+                            <div class="price">Rp. {{ number_format($product->price, 0, ',', '.') }}</div>
+                        </div>
+                    </a>
                 </div>
             @endforeach
         </div>
