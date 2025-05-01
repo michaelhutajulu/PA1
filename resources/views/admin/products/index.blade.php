@@ -19,7 +19,6 @@
     @if (isset($query))
         <div class="mb-3">
             <strong>Hasil pencarian untuk:</strong> "{{ $query }}"
-
         </div>
     @endif
 
@@ -29,6 +28,7 @@
             <tr>
                 <th>#</th>
                 <th>Nama</th>
+                <th>Deskripsi</th> {{-- ✅ Tambahan kolom deskripsi --}}
                 <th>Kategori</th>
                 <th>Harga</th>
                 <th>Gambar</th>
@@ -40,6 +40,7 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->name }}</td>
+                    <td>{{ $item->description }}</td> {{-- ✅ Menampilkan deskripsi produk --}}
                     <td>{{ $item->category->name }}</td>
                     <td>Rp {{ number_format($item->price, 0, ',', '.') }}</td>
                     <td><img src="{{ asset('storage/' . $item->image) }}" width="50"></td>
@@ -53,7 +54,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="6" class="text-center">Produk tidak ditemukan.</td>
+                    <td colspan="7" class="text-center">Produk tidak ditemukan.</td> {{-- ✅ jumlah kolom diperbarui --}}
                 </tr>
             @endforelse
         </tbody>
