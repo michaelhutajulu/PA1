@@ -131,7 +131,7 @@
 
                 <!-- Info Toko -->
                 <div class="col-md-4">
-                    <h5 style="color: #284593;"><strong>Informasi Toko</strong></h5>
+                    <h3 class="mb-0 fw-bold" style="color: #284593;">Informasi Toko</h3>
                     <hr>
                     <p class="fw-semibold" style="color: #284593;">Waktu Operasional</p>
                     <p>Senin - Sabtu : 08.00 - 20.00</p>
