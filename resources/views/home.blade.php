@@ -40,10 +40,10 @@
 
     {{-- Produk Per Kategori --}}
     <h4 class="fw-bold text-center mb-4">Produk</h4>
-    <div class="row">
-        @foreach($productsPerCategory as $product)
-        <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-            <a href="{{ route('admin.products.show', $product->id) }}" class="text-decoration-none text-dark">
+    <div class="d-flex flex-wrap justify-content-center mx-n2">
+    @foreach($productsPerCategory as $product)
+        <div class="col-6 col-sm-6 col-md-4 col-lg-3 mb-4 px-2 d-flex">
+            <a href="{{ route('admin.products.show', $product->id) }}" class="text-decoration-none text-dark w-100">
                 <div class="featured-card h-100 fade-in">
                     <div class="image-container">
                         <img src="{{ asset('storage/' . $product->image) }}" 
@@ -57,8 +57,9 @@
                 </div>
             </a>
         </div>
-        @endforeach
-    </div>
+    @endforeach
+</div>
+
 
 </div>
 @endsection
