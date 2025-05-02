@@ -43,7 +43,7 @@
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 0px;
             font-size: 14px;
             box-sizing: border-box;
             background-color: #f0f0f0; 

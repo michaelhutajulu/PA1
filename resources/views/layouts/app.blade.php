@@ -25,7 +25,7 @@
     .modal-login-overlay {
         position: fixed;
         inset: 0;
-        background: rgba(0, 0, 0, 0.4);
+        background: rgba(0, 0, 0, 0.5);
         display: none;
         align-items: center;
         justify-content: center;
@@ -59,7 +59,6 @@
         width: 100%;
         padding: 12px;
         border: 1px solid #ccc;
-        border-radius: 10px;
         background: #f8f9fa;
         color: #333;
         font-size: 15px;
@@ -176,6 +175,19 @@
 .featured-card .text-muted {
     font-size: 0.9rem;
     color: #666;
+}
+
+.input-group {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
 }
 
 
