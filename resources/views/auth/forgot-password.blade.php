@@ -41,12 +41,13 @@
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 0;
             font-size: 14px;
             box-sizing: border-box;
             background-color: #f0f0f0; 
             color: #333;
         }
+
         .input-group input::placeholder {
             color: rgba(0, 0, 0, 0.3); 
         }
