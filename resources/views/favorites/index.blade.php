@@ -9,27 +9,26 @@
     </div>
 
     @if ($favorites->count() > 0)
-        <div class="row" id="favorites-container">
-            @foreach($favorites as $product)
-                <div class="col-md-3 mb-4">
-                    <a href="{{ route('admin.products.show', $product->id) }}" 
-                       onclick="sessionStorage.setItem('back_url', window.location.href)" 
-                       class="text-decoration-none text-dark">
-                        <div class="card h-100 border-0 custom-card product-card">
-                            <div class="image-container">
-                                <img src="{{ asset('storage/' . $product->image) }}" class="product-image" 
-                                    alt="{{ $product->name }}">
-                            </div>
-                            <div class="card-body d-flex flex-column align-items-center">
-                                <h5 class="card-title text-center">{{ $product->name }}</h5>
-                                <p class="card-text text-primary fw-bold">Rp. {{ number_format($product->price, 0, ',', '.') }}</p>
-                                <!-- Tombol Detail dihapus karena seluruh card sudah bisa diklik -->
-                            </div>
+    <div class="d-flex flex-wrap justify-content-center mx-n2" id="favorites-container">
+        @foreach($favorites as $product)
+            <div class="col-6 col-sm-4 col-md-3 mb-4 px-2 d-flex">
+                <a href="{{ route('admin.products.show', $product->id) }}" 
+                   onclick="sessionStorage.setItem('back_url', window.location.href)" 
+                   class="text-decoration-none text-dark w-100">
+                    <div class="card h-100 border-0 custom-card product-card">
+                        <div class="image-container">
+                            <img src="{{ asset('storage/' . $product->image) }}" class="product-image" 
+                                alt="{{ $product->name }}">
                         </div>
-                    </a>
-                </div>
-            @endforeach
-        </div>
+                        <div class="card-body d-flex flex-column align-items-center">
+                            <h5 class="card-title text-center">{{ $product->name }}</h5>
+                            <p class="card-text text-primary fw-bold">Rp. {{ number_format($product->price, 0, ',', '.') }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        @endforeach
+    </div>
     @else
         <div class="alert alert-info text-center py-4" id="empty-message">
             <i class="bi bi-heart fs-1 d-block mb-3"></i>

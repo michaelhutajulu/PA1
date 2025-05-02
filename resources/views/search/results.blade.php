@@ -77,7 +77,7 @@
     @endif
 
     @if($products->isEmpty() && !$suggestion)
-        <p class="text-center">Produk dengan kata kunci <strong>"{{ $query }}"</strong> tidak ditemukan.</p>
+        <p class="text-center">Produk <strong>"{{ $query }}"</strong> tidak ditemukan.</p>
     @endif
 
     @if(!$products->isEmpty())
