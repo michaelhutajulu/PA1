@@ -5,9 +5,9 @@
     <h3 class="fw-bold text-center mb-5">Produk Kategori: {{ $category->name }}</h3>
     
     @if ($products->count() > 0)
-<div class="d-flex flex-wrap justify-content-center">
+<div class="d-flex flex-wrap justify-content-center mx-n2">
     @foreach($products as $product)
-    <div class="col-6 col-sm-4 col-md-3 mb-4 d-flex justify-content-center">
+    <div class="col-6 col-sm-4 col-md-3 mb-4 px-2 d-flex">
         <a href="{{ route('admin.products.show', $product->id) }}" class="text-decoration-none text-dark w-100">
             <div class="product-card h-100">
                 <div class="card-image-container">

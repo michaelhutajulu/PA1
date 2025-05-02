@@ -134,7 +134,7 @@
         <a class="navbar-brand text-white fw-bold d-flex align-items-center me-4" href="{{ route('home') }}">
             <div class="rounded-circle me-2 d-flex align-items-center justify-content-center"
                  style="height: 38px; width: 38px;">
-                <img src="{{ asset('logo.png') }}" alt="Logo Bintang Serasi"
+                <img src="{{ asset('logo2.png') }}" alt="Logo Bintang Serasi"
                      style="height: 30px; object-fit: contain;">
             </div>
             <span style="letter-spacing: 0.5px;">Bintang Serasi</span>
