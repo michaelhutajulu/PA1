@@ -135,7 +135,7 @@
     }
 .featured-card {
     border-radius: 20px;
-    background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+    background: linear-gradient(135deg,rgb(247, 247, 247) 0%,rgb(248, 248, 248) 100%);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     transition: transform 0.5s ease, box-shadow 0.5s ease;
     overflow: hidden;

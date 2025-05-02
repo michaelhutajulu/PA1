@@ -13,11 +13,24 @@
             <h4 class="fw-bold">{{ $product->name }}</h4>
             <p class="text-dark fs-5 fw-semibold mb-4">Rp. {{ number_format($product->price, 0, ',', '.') }}</p>
 
-            <div class="mb-4" style="white-space: pre-line;">
+            {{-- Judul Spesifikasi --}}
+            <h6 class="fw-semibold mb-2">Detail Produk</h6>
+
+            {{-- Deskripsi Produk sebagai Card Scrollable --}}
+            <div 
+                class="mb-4 border rounded shadow-sm"
+                style="
+                    padding: 0.1rem 0.5rem 1rem 1rem;  /* Atas dikurangi */
+                    max-height: 200px;
+                    overflow-y: auto;
+                    white-space: pre-line;
+                    background-color: #f8f9fa;
+                "
+            >
                 {{ $product->description ?? 'Tidak ada deskripsi.' }}
             </div>
 
-            {{-- Ikon Favorit Tampil untuk Semua --}}
+            {{-- Ikon Favorit --}}
             <div class="d-flex align-items-center gap-2 mt-3">
                 <i 
                     id="favorite-icon"
@@ -80,9 +93,7 @@
                         console.error('Terjadi kesalahan:', error);
                     });
                 @else
-                    // Simpan URL sekarang ke sessionStorage
                     sessionStorage.setItem('redirect_after_login', window.location.href);
-                    // Tampilkan modal login, bukan redirect
                     if (typeof toggleLoginModal === 'function') {
                         toggleLoginModal();
                     } else {

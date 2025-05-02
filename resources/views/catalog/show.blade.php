@@ -5,10 +5,10 @@
     <h3 class="fw-bold text-center mb-5">Produk Kategori: {{ $category->name }}</h3>
     
     @if ($products->count() > 0)
-    <div class="row">
+<div class="d-flex flex-wrap justify-content-center">
     @foreach($products as $product)
-    <div class="col-md-3 mb-4">
-        <a href="{{ route('admin.products.show', $product->id) }}" class="text-decoration-none text-dark">
+    <div class="col-6 col-sm-4 col-md-3 mb-4 d-flex justify-content-center">
+        <a href="{{ route('admin.products.show', $product->id) }}" class="text-decoration-none text-dark w-100">
             <div class="product-card h-100">
                 <div class="card-image-container">
                     <img src="{{ asset('storage/' . $product->image) }}" class="product-image" alt="{{ $product->name }}">
@@ -16,7 +16,6 @@
                 <div class="card-content">
                     <h5 class="product-title">{{ $product->name }}</h5>
                     <div class="price">Rp. {{ number_format($product->price, 0, ',', '.') }}</div>
-                    <!-- Menghapus tombol "Detail" karena seluruh card sudah menjadi link -->
                 </div>
             </div>
         </a>
