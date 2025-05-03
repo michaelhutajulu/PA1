@@ -7,17 +7,20 @@ use Illuminate\Http\Request;
 
 class StoreProfileController extends Controller
 {
+    // Menampilkan profil toko (data terbaru) untuk admin
     public function index()
     {
         $storeProfile = StoreProfile::latest()->first();
         return view('admin.store_profile.index', compact('storeProfile'));
     }
 
+    // Menampilkan form untuk membuat profil toko baru
     public function create()
     {
         return view('admin.store_profile.create');
     }
 
+    // Menyimpan profil toko baru ke database
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -40,13 +43,14 @@ class StoreProfileController extends Controller
         return redirect()->route('store_profile.index')->with('success', 'Profil toko berhasil ditambahkan.');
     }
 
+    // Menampilkan form untuk mengedit profil toko (data terbaru)
     public function edit()
     {
         $storeProfile = StoreProfile::latest()->first();
         return view('admin.store_profile.edit', compact('storeProfile'));
     }
     
-
+    // Mengupdate profil toko (data terbaru) di database
     public function update(Request $request)
     {
         $storeProfile = StoreProfile::latest()->first(); // ambil yang terakhir dibuat
@@ -76,13 +80,14 @@ class StoreProfileController extends Controller
         return redirect()->route('store_profile.index')->with('success', 'Profil toko berhasil diperbarui.');
     }
     
-
+    // Menghapus profil toko (data terbaru) dari database
     public function destroy(StoreProfile $storeProfile)
     {
         $storeProfile->delete();
         return redirect()->route('store_profile.index')->with('success', 'Profil toko berhasil dihapus.');
     }
 
+    // Menampilkan profil toko (data terbaru) untuk frontend
     public function frontend()
     {
         $storeProfile = StoreProfile::latest()->first(); // atau find(1)

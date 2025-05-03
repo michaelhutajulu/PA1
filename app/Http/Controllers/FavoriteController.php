@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 
 class FavoriteController extends Controller
 {
+    // Menambah atau menghapus produk dari daftar favorit pengguna
     public function toggle($productId)
     {
         $user = auth()->user();
@@ -19,7 +20,7 @@ class FavoriteController extends Controller
         }
     }
 
-
+    // Menampilkan daftar produk favorit pengguna
     public function index()
     {
         $favorites = auth()->user()
