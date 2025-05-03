@@ -52,7 +52,7 @@ class AuthController extends Controller
         }
 
         // Jika gagal login, kembalikan ke halaman login dengan input yang disertakan
-        return back()->with('error', 'Email atau password salah')->withInput();
+        return back()->with('error', 'Email atau kata sandi salah')->withInput();
     }
 
     // Logout
@@ -95,10 +95,10 @@ class AuthController extends Controller
             'email.email' => 'Format email tidak valid.',
             'email.regex' => 'Email harus menggunakan domain @gmail.com.',
             'email.unique' => 'Email sudah terdaftar.',
-            'password.required' => 'Password wajib diisi.',
-            'password.min' => 'Password minimal 8 karakter.',
-            'password.regex' => 'Password harus diawali huruf kapital dan mengandung karakter unik.',
-            'password.confirmed' => 'Konfirmasi password tidak sesuai.',
+            'password.required' => 'Kata sandi wajib diisi.',
+            'password.min' => 'Kata sandi minimal 8 karakter.',
+            'password.regex' => 'Kata sandi harus diawali huruf kapital dan mengandung karakter unik.',
+            'password.confirmed' => 'Konfirmasi kata sandi tidak sesuai.',
         ]);
 
         // Buat user baru
@@ -109,7 +109,7 @@ class AuthController extends Controller
         ]);
 
         // Redirect ke halaman login setelah sukses registrasi
-        return redirect()->route('login')->with('success', 'Registrasi berhasil! Silakan login.');
+        return redirect()->route('login')->with('success', 'Registrasi berhasil! Silakan Masuk.');
     }
 
 }
