@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\StoreProfile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StoreProfileController extends Controller
 {
@@ -38,6 +39,8 @@ class StoreProfileController extends Controller
         if ($request->hasFile('store_image')) {
             $data['store_image'] = $request->file('store_image')->store('stores', 'public');
         }
+
+        $data['user_id'] = Auth::id();
 
         StoreProfile::create($data);
         return redirect()->route('store_profile.index')->with('success', 'Profil toko berhasil ditambahkan.');
