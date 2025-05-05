@@ -9,21 +9,18 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    // Menampilkan daftar semua produk beserta kategorinya
     public function index()
     {
         $products = Product::with('category')->get();
         return view('admin.products.index', compact('products'));
     }
 
-    // Menampilkan form untuk membuat produk baru beserta daftar kategori
     public function create()
     {
         $categories = Category::all();
         return view('admin.products.create', compact('categories'));
     }
 
-    // Menyimpan produk baru ke database
     public function store(Request $request)
     {
         $request->validate([
@@ -36,25 +33,25 @@ class ProductController extends Controller
 
         $imagePath = $request->file('image')->store('products', 'public');
 
+        // Menambahkan user_id untuk menyimpan admin yang membuat produk
         Product::create([
             'name' => $request->name,
             'category_id' => $request->category_id,
             'price' => $request->price,
             'description' => $request->description,
             'image' => $imagePath,
+            'user_id' => auth()->id(), // Menyimpan user_id admin yang sedang login
         ]);
 
         return redirect()->route('products.index')->with('success', 'Produk berhasil ditambahkan.');
     }
 
-    // Menampilkan form untuk mengedit produk beserta daftar kategori
     public function edit(Product $product)
     {
         $categories = Category::all();
         return view('admin.products.edit', compact('product', 'categories'));
     }
 
-    // Mengupdate produk di database
     public function update(Request $request, Product $product)
     {
         $request->validate([
@@ -75,13 +72,13 @@ class ProductController extends Controller
             'category_id' => $request->category_id,
             'price' => $request->price,
             'description' => $request->description,
-            'image' => $product->image,
+            'image' => $product->image,  // Update image path jika ada
+            // 'user_id' tidak perlu diupdate karena sudah ditetapkan saat pembuatan produk
         ]);
 
         return redirect()->route('products.index')->with('success', 'Produk berhasil diperbarui.');
     }
 
-    // Menghapus produk dari database
     public function destroy(Product $product)
     {
         Storage::disk('public')->delete($product->image);
@@ -89,14 +86,12 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Produk berhasil dihapus.');
     }
 
-    // Menampilkan detail produk berdasarkan ID
     public function show($id)
     {
         $product = Product::findOrFail($id); // cari produk berdasarkan ID
         return view('admin.products.show', compact('product'));
     }
 
-    // Menambah atau menghapus produk dari daftar favorit pengguna (via AJAX)
     public function toggleFavorite($id)
     {
         $user = auth()->user();
@@ -111,7 +106,6 @@ class ProductController extends Controller
         }
     }
 
-    // Menampilkan daftar produk favorit pengguna
     public function favorit()
     {
         $user = auth()->user();
@@ -120,7 +114,6 @@ class ProductController extends Controller
         return view('favorites.index', compact('favorites'));
     }
 
-    // Mencari produk berdasarkan kata kunci di halaman admin
     public function searchAdmin(Request $request)
     {
         $query = $request->input('query');
@@ -161,6 +154,4 @@ class ProductController extends Controller
             'suggestion' => $suggestion,
         ]);
     }
-
-
 }

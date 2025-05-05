@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,5 +9,12 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'image']; // Tambahkan ini
+    // Menambahkan 'user_id' ke dalam properti $fillable agar bisa diisi saat create atau update
+    protected $fillable = ['name', 'image', 'user_id']; // Tambahkan 'user_id'
+
+    // Relasi dengan model User
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

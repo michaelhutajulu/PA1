@@ -9,16 +9,18 @@ class StoreProfile extends Model
 {
     use HasFactory;
 
+    // Menambahkan 'user_id' ke dalam properti $fillable agar bisa diisi saat create atau update
     protected $fillable = [
-        'user_id',
         'title',
         'header_description',
         'header_image',
         'store_image',
         'main_description',
+        'user_id', // Tambahkan 'user_id'
     ];
 
-    public function user(): BelongsTo
+    // Relasi dengan model User
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
