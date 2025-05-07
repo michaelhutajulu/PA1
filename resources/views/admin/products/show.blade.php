@@ -10,17 +10,19 @@
 
         {{-- Detail Produk --}}
         <div class="col-md-6">
-            <h4 class="fw-bold">{{ $product->name }}</h4>
-            <p class="text-dark fs-5 fw-semibold mb-4">Rp. {{ number_format($product->price, 0, ',', '.') }}</p>
+            {{-- NAMA PRODUK: Menambahkan kelas fs-3 untuk ukuran setara <h3> --}}
+            <h4 class="fw-bold fs-3">{{ $product->name }}</h4>
+            {{-- HARGA PRODUK: Mengubah fs-5 menjadi fs-4 untuk ukuran setara <h4> --}}
+            <p class="text-dark fs-4 fw-semibold mb-4">Rp. {{ number_format($product->price, 0, ',', '.') }}</p>
 
-            {{-- Judul Spesifikasi --}}
-            <h6 class="fw-semibold mb-2">Detail Produk</h6>
+            {{-- JUDUL SPESIFIKASI: Menambahkan kelas fs-5 untuk ukuran setara <h5> --}}
+            <h6 class="fw-semibold mb-2 fs-5">Detail Produk</h6>
 
-            {{-- Deskripsi Produk sebagai Card Scrollable --}}
-            <div 
-                class="mb-4 border rounded shadow-sm"
+            {{-- DESKRIPSI PRODUK: Menambahkan kelas fs-6 untuk ukuran paragraf standar Bootstrap --}}
+            <div
+                class="mb-4 border rounded shadow-sm fs-6" {{-- Tambah fs-6 --}}
                 style="
-                    padding: 0.1rem 0.5rem 1rem 1rem;  /* Atas dikurangi */
+                    padding: 0.1rem 0.5rem 1rem 1rem;
                     max-height: 200px;
                     overflow-y: auto;
                     white-space: pre-line;
@@ -32,19 +34,20 @@
 
             {{-- Ikon Favorit --}}
             <div class="d-flex align-items-center gap-2 mt-3">
-                <i 
+                <i
                     id="favorite-icon"
-                    class="bi 
-                        @auth 
-                            {{ auth()->user()->favorites->contains($product->id) ? 'bi-heart-fill text-danger' : 'bi-heart' }} 
-                        @else 
-                            bi-heart 
+                    class="bi
+                        @auth
+                            {{ auth()->user()->favorites->contains($product->id) ? 'bi-heart-fill text-danger' : 'bi-heart' }}
+                        @else
+                            bi-heart
                         @endauth
                     "
-                    style="font-size: 1.6rem; cursor: pointer;"
+                    style="font-size: 1.8rem; cursor: pointer;" {{-- Ukuran ikon diperbesar dari 1.6rem menjadi 1.8rem --}}
                     data-id="{{ $product->id }}"
                 ></i>
-                <span id="favorite-text">
+                {{-- TEKS FAVORIT: Menambahkan kelas fs-6 untuk ukuran paragraf standar --}}
+                <span id="favorite-text" class="fs-6"> {{-- Tambah fs-6 --}}
                     @auth
                         {{ auth()->user()->favorites->contains($product->id) ? 'Hapus dari Favorit' : 'Tambah Favorit' }}
                     @else
@@ -93,11 +96,15 @@
                         console.error('Terjadi kesalahan:', error);
                     });
                 @else
+                    // Jika pengguna belum login, simpan URL saat ini dan coba buka modal login
                     sessionStorage.setItem('redirect_after_login', window.location.href);
                     if (typeof toggleLoginModal === 'function') {
                         toggleLoginModal();
                     } else {
-                        console.error("Fungsi toggleLoginModal() tidak ditemukan.");
+                        // Fallback jika fungsi modal tidak ditemukan, arahkan ke halaman login
+                        // Pastikan Anda memiliki route 'login'
+                        console.warn("Fungsi toggleLoginModal() tidak ditemukan, mengarahkan ke halaman login.");
+                        window.location.href = "{{ route('login') }}"; // Sesuaikan dengan nama route login Anda
                     }
                 @endif
             });

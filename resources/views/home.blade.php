@@ -5,9 +5,9 @@
 
     {{-- Banner --}}
     <div class="position-relative mb-5">
-        <img src="{{ asset('storage/dashboard/banner.jpg') }}" 
-             class="img-fluid w-100 rounded shadow" 
-             alt="Banner Toko" 
+        <img src="{{ asset('storage/dashboard/banner.jpg') }}"
+             class="img-fluid w-100 rounded shadow"
+             alt="Banner Toko"
              style="max-height: 450px; object-fit: cover;">
 
         <div class="position-absolute top-50 start-0 translate-middle-y text-white ps-4 pe-5 py-3 banner-caption">
@@ -24,13 +24,14 @@
             <a href="{{ route('admin.products.show', $product->id) }}" class="text-decoration-none text-dark">
                 <div class="featured-card h-100 fade-in">
                     <div class="image-container">
-                        <img src="{{ asset('storage/' . $product->image) }}" 
-                             class="product-image" 
+                        <img src="{{ asset('storage/' . $product->image) }}"
+                             class="product-image"
                              alt="{{ $product->name }}">
                     </div>
                     <div class="card-body text-center">
-                        <h6 class="card-title fw-bold mb-2">{{ $product->name }}</h6>
-                        <p class="text-muted small mb-0">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                        <h4 class="card-title fw-bold mb-2">{{ $product->name }}</h4>
+                        {{-- MODIFIKASI HARGA PRODUK (tambah warna biru) --}}
+                        <h5 class="mb-0 text-primary">Rp {{ number_format($product->price, 0, ',', '.') }}</h5>
                     </div>
                 </div>
             </a>
@@ -46,20 +47,20 @@
             <a href="{{ route('admin.products.show', $product->id) }}" class="text-decoration-none text-dark w-100">
                 <div class="featured-card h-100 fade-in">
                     <div class="image-container">
-                        <img src="{{ asset('storage/' . $product->image) }}" 
-                             class="product-image" 
+                        <img src="{{ asset('storage/' . $product->image) }}"
+                             class="product-image"
                              alt="{{ $product->name }}">
                     </div>
                     <div class="card-body text-center">
-                        <h6 class="card-title fw-bold mb-2">{{ $product->name }}</h6>
-                        <p class="text-muted small mb-0">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                        <h4 class="card-title fw-bold mb-2">{{ $product->name }}</h4>
+                        {{-- MODIFIKASI HARGA PRODUK (tambah warna biru) --}}
+                        <h5 class="mb-0 text-primary">Rp {{ number_format($product->price, 0, ',', '.') }}</h5>
                     </div>
                 </div>
             </a>
         </div>
     @endforeach
-</div>
-
+    </div>
 
 </div>
 @endsection
