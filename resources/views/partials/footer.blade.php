@@ -16,28 +16,29 @@
             <!-- Kritik dan Saran -->
             <div class="col-lg-5 offset-lg-2">
                 <h2 class="fw-bold mb-3" style="font-size: 28px;">Bantu kami dengan memberikan saran</h2>
-                <div class="bg-white p-4 rounded-2 shadow" style="max-width: 450px;">
-                    <!-- Alert Messages -->
-                    @if (session('success'))
+                <div id="formSaranWrapper" class="bg-white p-4 rounded-2 shadow" style="max-width: 450px;">
+                    <!-- Alert Messages SPESIFIK untuk Form Saran -->
+                    @if (session('saran_success'))
                         <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
-                            {{ session('success') }}
+                            {{ session('saran_success') }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert"
                                 aria-label="Close"></button>
                         </div>
                     @endif
 
-                    @if (session('info'))
+                    @if (session('saran_info')) {{-- Jika kamu menggunakan saran_info --}}
                         <div class="alert alert-info alert-dismissible fade show mb-3" role="alert">
-                            {{ session('info') }}
+                            {{ session('saran_info') }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert"
                                 aria-label="Close"></button>
                         </div>
                     @endif
 
-                    @if ($errors->any())
+                    {{-- Menampilkan error validasi SPESIFIK dari bag 'saranValidation' --}}
+                    @if ($errors->saranValidation->any())
                         <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
-                            <ul class="mb-0">
-                                @foreach ($errors->all() as $error)
+                            <ul class="mb-0 ps-3" style="list-style-type: disc;">
+                                @foreach ($errors->saranValidation->all() as $error)
                                     <li>{{ $error }}</li>
                                 @endforeach
                             </ul>
@@ -45,11 +46,13 @@
                                 aria-label="Close"></button>
                         </div>
                     @endif
+                    {{-- Akhir Alert Messages SPESIFIK --}}
+
                     <form id="formSaran" action="{{ route('saran.kirim') }}" method="POST">
                         @csrf
                         <div class="mb-3">
                             <textarea name="pesan" id="pesanSaran" class="form-control rounded-3 py-2 px-3" placeholder="Saran Anda" required
-                                style="resize: none; border-color: #e0e0e0; background-color: #f8f9fa; height: 130px; max-height: 130px; overflow-y: auto;">{{ session('draft_saran', '') }}</textarea>
+                                style="resize: none; border-color: #e0e0e0; background-color: #f8f9fa; height: 130px; max-height: 130px; overflow-y: auto;">{{ old('pesan', session('draft_saran', '')) }}</textarea>
                         </div>
                         <div class="d-flex justify-content-end">
                             <button type="submit"
@@ -65,33 +68,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const textarea = document.getElementById('pesanSaran');
-
-            textarea.addEventListener('focus', function() {
-                this.style.outline = 'none';
-                this.style.borderColor = '#376fa7';
-            });
-
-            textarea.addEventListener('blur', function() {
-                this.style.borderColor = '#e0e0e0';
-            });
-
-            const alerts = document.querySelectorAll('.alert');
-
-            // Atur timeout untuk menghilangkannya setelah 5 detik
-            alerts.forEach(function(alert) {
-                setTimeout(function() {
-                    const bsAlert = new bootstrap.Alert(alert);
-                    bsAlert.close();
-                }, 5000); // 5000 ms = 5 detik
-            });
-        });
-    </script>
-    </div>
     </div>
 
     <!-- Informasi Toko -->
@@ -148,7 +124,7 @@
     <!-- Copyright Section -->
     <div class="container">
         <div class="py-4 text-center">
-            <small class="text-white-50">&copy; {{ date('Y') }} Bintang Serasi. All rights reserved.</small>
+            <small class="text-white-50">© {{ date('Y') }} Bintang Serasi. All rights reserved.</small>
         </div>
     </div>
     <style>
@@ -198,83 +174,124 @@
         }
     </style>
 
-    <!-- Script for form handling -->
+    <!-- Script for form handling (TIDAK ADA PERUBAHAN PADA SCRIPT INI DARI VERSI SEBELUMNYA YANG SUDAH BAIK) -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Ambil form dan textarea
-            const formSaran = document.getElementById('formSaran');
+            // --- Deklarasi Variabel Umum ---
             const pesanSaran = document.getElementById('pesanSaran');
+            const formSaran = document.getElementById('formSaran');
+            const alerts = document.querySelectorAll('.alert'); // Ini akan mengambil SEMUA alert di halaman.
 
-            // Periksa apakah ada draft tersimpan di localStorage
-            const savedDraft = localStorage.getItem('saran_draft');
-            if (savedDraft) {
-                pesanSaran.value = savedDraft;
+            // --- Efek Focus/Blur pada Textarea Saran ---
+            if (pesanSaran) {
+                pesanSaran.addEventListener('focus', function() {
+                    this.style.outline = 'none';
+                    this.style.borderColor = '#376fa7';
+                });
+
+                pesanSaran.addEventListener('blur', function() {
+                    this.style.borderColor = '#e0e0e0';
+                });
+
+                const savedDraft = localStorage.getItem('saran_draft');
+                if (savedDraft) {
+                    pesanSaran.value = savedDraft;
+                }
+
+                pesanSaran.addEventListener('input', function() {
+                    localStorage.setItem('saran_draft', this.value);
+                });
             }
 
-            // Simpan draft saat pengguna mengetik
-            pesanSaran.addEventListener('input', function() {
-                localStorage.setItem('saran_draft', this.value);
-            });
-
-            // Tangani submit form
-            formSaran.addEventListener('submit', function(e) {
-                // Hapus draft dari localStorage jika user sudah login
-                @if (Auth::check())
-                    localStorage.removeItem('saran_draft');
-                    localStorage.removeItem('from_saran');
-                @else
-                    // Jika belum login, kita tetap menyimpan draft
-                    localStorage.setItem('saran_draft', pesanSaran.value);
-                @endif
-            });
-
-            // Cek apakah user baru saja login dari form saran
-            const fromSaran = localStorage.getItem('from_saran');
-            if (fromSaran === 'true') {
-                // Hapus flag
-                localStorage.removeItem('from_saran');
-
-                // Fokus ke textarea
+            // --- Pengaturan Alert Auto-Close ---
+            // Kita perlu lebih spesifik jika ingin hanya alert saran yang auto-close
+            // atau jika semua alert boleh auto-close.
+            // Untuk sekarang, ini akan menutup semua alert termasuk yang di modal jika ditampilkan bersamaan.
+            const saranAlerts = document.querySelectorAll('#formSaranWrapper .alert'); // Target alert di dalam form saran
+            saranAlerts.forEach(function(alert) {
                 setTimeout(function() {
-                    pesanSaran.focus();
-                }, 500);
+                    // Pastikan Bootstrap Alert sudah dimuat jika ini menggunakan API Bootstrap
+                    if (typeof bootstrap !== 'undefined' && typeof bootstrap.Alert === 'function') {
+                        const bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+                        if (bsAlert) {
+                            bsAlert.close();
+                        }
+                    } else {
+                        // Fallback jika Bootstrap JS tidak ada atau Alert tidak ada
+                        alert.style.display = 'none';
+                    }
+                }, 7000); // 7 detik, sesuaikan
+            });
+
+
+            // --- Penanganan Submit Form Saran ---
+            if (formSaran) {
+                formSaran.addEventListener('submit', function(event) {
+                    @if (Auth::check())
+                        if (pesanSaran) {
+                            localStorage.removeItem('saran_draft');
+                        }
+                        localStorage.removeItem('from_saran');
+                    @else
+                        event.preventDefault();
+                        if (pesanSaran) {
+                            localStorage.setItem('saran_draft', pesanSaran.value);
+                        }
+                        sessionStorage.setItem('redirect_after_login', window.location.href.split('#')[0] + '#formSaranWrapper');
+                        localStorage.setItem('from_saran', 'true');
+
+                        if (typeof toggleLoginModal === 'function') {
+                            toggleLoginModal();
+                        } else {
+                            console.error("Fungsi toggleLoginModal() tidak ditemukan. Mengarahkan ke halaman login biasa.");
+                            @if (Route::has('login'))
+                                window.location.href = "{{ route('login') }}";
+                            @else
+                                console.error("Route 'login' tidak ditemukan.");
+                            @endif
+                        }
+                    @endif
+                });
             }
-            //Infromasi toko//
+
+            // --- Fokus Otomatis ke Textarea Setelah Login dari Form Saran ---
+            if (pesanSaran) {
+                const fromSaran = localStorage.getItem('from_saran');
+                if (fromSaran === 'true') {
+                    localStorage.removeItem('from_saran');
+                    setTimeout(function() {
+                        pesanSaran.focus();
+                        const formWrapper = document.getElementById('formSaranWrapper');
+                        if (formWrapper) {
+                            formWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }, 300);
+                }
+            }
+
+            // --- Informasi Toko (Status Operasional) ---
             function updateStatus() {
                 const statusElement = document.getElementById('status-operasional');
                 if (!statusElement) return;
-
+                // ... (logika updateStatus tetap sama) ...
                 const now = new Date();
                 const dayIndex = now.getDay();
                 const hour = now.getHours();
                 const minute = now.getMinutes();
                 const currentTime = hour + minute / 60;
-
                 let isOpen = false;
-
-                if (dayIndex === 0) { // Minggu
-                    isOpen = (currentTime >= 12 && currentTime < 20);
-                } else { // Senin - Sabtu
-                    isOpen = (currentTime >= 8 && currentTime < 20);
-                }
-
+                if (dayIndex === 0) { isOpen = (currentTime >= 12 && currentTime < 20); }
+                else { isOpen = (currentTime >= 8 && currentTime < 20); }
                 const dayNames = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
                 const today = dayNames[dayIndex];
-
-                const timeFormatted = now.toLocaleTimeString('id-ID', {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                });
-
-                statusElement.innerHTML =
-                    `Hari ini: <strong>${today}</strong>, pukul <strong>${timeFormatted}</strong> — ` +
-                    (isOpen ?
-                        '<span style="color: green;">Sedang Buka</span>' :
-                        '<span style="color: red;">Tutup</span>');
+                const timeFormatted = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+                statusElement.innerHTML = `Hari ini: <strong>${today}</strong>, pukul <strong>${timeFormatted}</strong> — ` + (isOpen ? '<span style="color: green;">Sedang Buka</span>' : '<span style="color: red;">Tutup</span>');
             }
 
-            updateStatus();
-            setInterval(updateStatus, 60000); // Update tiap 1 menit
+            if (document.getElementById('status-operasional')) {
+                updateStatus();
+                setInterval(updateStatus, 60000);
+            }
         });
     </script>
 </footer>
