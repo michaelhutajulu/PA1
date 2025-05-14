@@ -2,122 +2,213 @@
 
 @section('content')
 <style>
-    .header-banner {
+    /* Font dasar bisa disesuaikan di layouts.app atau di sini */
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        background-color: #f8f9fa; /* Warna latar halaman yang netral */
+        color: #333;
+    }
+
+    /* Banner Atas (Header) */
+    .custom-header-banner {
         position: relative;
-        border-radius: 20px;
+        border-radius: 15px; /* Radius yang lebih halus, sesuaikan dengan gambar Anda */
         overflow: hidden;
-        margin-bottom: 40px;
+        margin-bottom: 50px; /* Jarak yang cukup ke konten berikutnya */
+        /* Tidak perlu background-color solid jika gambar selalu ada */
     }
 
-    .header-banner img {
+    .custom-header-banner .banner-image-background {
         width: 100%;
-        height: 400px;
+        height: 300px; /* Sesuaikan tinggi banner agar proporsional dan teks muat */
         object-fit: cover;
-        filter: brightness(60%);
+        /* Filter brightness untuk memastikan teks putih kontras tanpa overlay gelap solid */
+        filter: brightness(0.65); /* Sesuaikan nilai brightness (0.0 - 1.0) */
+        display: block;
     }
 
-    .header-banner .text-overlay {
+    .custom-header-banner .banner-text-content {
         position: absolute;
         top: 50%;
-        left: 30px;
-        transform: translateY(-50%);
+        left: 50%; /* Pusatkan teks secara horizontal */
+        transform: translate(-50%, -50%); /* Teknik centering absolut */
         color: white;
-        background: rgba(0, 0, 0, 0.5);
+        text-align: center; /* Teks di tengah */
+        width: 80%; /* Batasi lebar teks agar tidak terlalu ke pinggir */
+        max-width: 750px; /* Batas maksimal agar tetap terbaca di layar lebar */
         padding: 20px;
-        border-radius: 15px;
-        max-width: 500px;
+        /* Tidak ada background di sini agar benar-benar transparan di atas gambar */
+        /* text-shadow: 0 1px 3px rgba(0,0,0,0.5); */ /* Opsional: sedikit shadow untuk keterbacaan lebih */
     }
 
-    .store-section {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 40px;
-        align-items: center;
-        margin-bottom: 60px;
-    }
-
-    .store-image img {
-        border-radius: 20px;
-        width: 350px;
-        height: auto;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-
-    .store-description {
-        max-width: 600px;
-        text-align: justify;
-    }
-
-    .store-description h3 {
+    .custom-header-banner .banner-text-content h2 {
+        font-size: 2.4rem; /* Ukuran font judul banner */
         font-weight: bold;
         margin-bottom: 15px;
+        line-height: 1.2;
     }
 
-    .info-section {
-    margin-top: 40px;
-    margin-bottom: 60px;
-}
+    .custom-header-banner .banner-text-content p {
+        font-size: 1.1rem; /* Ukuran font deskripsi banner */
+        line-height: 1.6;
+        opacity: 0.95; /* Sedikit transparan agar lebih menyatu */
+    }
 
-.info-cards {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    flex-wrap: wrap;
-}
+    /* Bagian Konten Toko (Gambar Besar di Kiri dan Deskripsi di Kanan) */
+    .custom-store-section {
+        display: flex;
+        flex-wrap: wrap; /* Agar responsif */
+        gap: 30px; /* Jarak antara gambar dan deskripsi */
+        align-items: flex-start; /* Gambar dan teks align dari atas */
+        margin-bottom: 60px;
+        background-color: #fff; /* Beri background putih untuk section ini */
+        padding: 25px; /* Padding di sekeliling section */
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
 
-.info-card {
-    border: 1px solid #ccc;
-    border-radius: 15px;
-    padding: 20px 30px;
-    min-width: 220px;
-    background-color: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
+    .custom-store-image-wrapper {
+        /* Gambar mengambil porsi lebih besar dan mentok ke kiri */
+        flex: 0 0 60%; /* Misalnya, 60% dari lebar section */
+        max-width: 60%; /* Sesuaikan persentase ini sesuai keinginan */
+        /* Tidak ada margin-left agar mentok ke padding parent (.custom-store-section) */
+    }
 
+    .custom-store-image-wrapper img {
+        width: 100%; /* Gambar mengisi wrapper */
+        /* Tinggi bisa auto agar mengikuti rasio aspek, atau set nilai tetap */
+        /* Mengikuti referensi gambar Anda (515x440), jika lebar diperbesar, tinggi juga akan membesar proporsional */
+        /* Mari kita set tinggi spesifik dan gunakan object-fit, atau biarkan auto */
+        height: 500px; /* Tinggi gambar lebih besar, sesuaikan */
+        object-fit: cover;
+        border-radius: 10px; /* Radius untuk gambar toko */
+        box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        display: block;
+    }
+
+    .custom-store-description-wrapper {
+        flex: 1; /* Mengambil sisa ruang yang tersedia (sekitar 40% dikurangi gap) */
+        min-width: 280px; /* Lebar minimum sebelum deskripsi menjadi terlalu sempit */
+        padding-left: 15px; /* Sedikit jarak dari gambar jika gap tidak cukup */
+    }
+
+    .custom-store-description-wrapper h3 {
+        font-weight: bold;
+        font-size: 1.9rem; /* Ukuran font judul "Apa itu..." */
+        color: #2c3e50;
+        margin-top: 5px; /* Sedikit penyesuaian vertikal */
+        margin-bottom: 20px;
+        line-height: 1.3;
+    }
+
+    .custom-store-description-wrapper p {
+        font-size: 1rem;
+        line-height: 1.7; /* Line height yang baik untuk keterbacaan */
+        color: #454545; /* Warna teks paragraf yang sedikit lebih lembut */
+        text-align: left; /* Sesuai gambar, bukan justify agar spasi antar kata rapi */
+        margin-bottom: 15px; /* Jarak antar paragraf jika ada lebih dari satu */
+    }
+    .custom-store-description-wrapper p:last-child {
+        margin-bottom: 0;
+    }
+
+
+    /* Media Query untuk Responsivitas */
+    @media (max-width: 991px) { /* Ukuran tablet */
+        .custom-header-banner .banner-text-content h2 {
+            font-size: 2rem;
+        }
+        .custom-header-banner .banner-text-content p {
+            font-size: 1rem;
+        }
+
+        .custom-store-section {
+            /* Di tablet, gambar mungkin masih bisa di samping, tapi persentasenya diubah */
+            gap: 25px;
+        }
+        .custom-store-image-wrapper {
+            flex-basis: 50%; /* Gambar dan teks jadi 50-50 di tablet */
+            max-width: 50%;
+        }
+        .custom-store-image-wrapper img {
+            height: 420px; /* Sesuaikan tinggi gambar untuk tablet */
+        }
+        .custom-store-description-wrapper {
+            padding-left: 0; /* Hapus padding kiri karena sudah ada gap */
+        }
+        .custom-store-description-wrapper h3 {
+            font-size: 1.7rem;
+        }
+    }
+
+    @media (max-width: 767px) { /* Ukuran mobile */
+        .custom-header-banner {
+            height: 250px; /* Banner lebih pendek di mobile */
+            margin-bottom: 30px;
+        }
+        .custom-header-banner .banner-text-content h2 {
+            font-size: 1.7rem;
+        }
+        .custom-header-banner .banner-text-content p {
+            font-size: 0.9rem;
+        }
+
+        .custom-store-section {
+            flex-direction: column; /* Tumpuk di layar mobile */
+            padding: 20px;
+        }
+        .custom-store-image-wrapper,
+        .custom-store-description-wrapper {
+            flex-basis: 100%; /* Mengambil lebar penuh saat ditumpuk */
+            max-width: 100%;
+        }
+        .custom-store-image-wrapper {
+            margin-bottom: 25px; /* Jarak bawah gambar saat ditumpuk */
+        }
+        .custom-store-image-wrapper img {
+            height: 350px; /* Sesuaikan tinggi gambar untuk mobile */
+        }
+        .custom-store-description-wrapper h3 {
+            font-size: 1.6rem;
+            text-align: center; /* Judul deskripsi bisa di tengah di mobile */
+        }
+        .custom-store-description-wrapper p {
+            text-align: justify; /* Paragraf bisa justify di mobile agar rapi di blok */
+        }
+    }
 </style>
 
-<div class="container">
+{{-- Container utama bisa container-fluid untuk banner dan container untuk konten, atau semua dalam container --}}
+{{-- Untuk banner agar bisa full-width (jika diinginkan, tapi gambar contoh Anda sepertinya dibatasi container) --}}
+{{-- Saya akan gunakan .container untuk semua agar konsisten dengan gambar contoh Anda --}}
+
+<div class="container py-4"> {{-- Padding atas dan bawah untuk seluruh halaman --}}
 
     {{-- Banner --}}
-    <div class="header-banner">
-        <img src="{{ asset('storage/' . $storeProfile->header_image) }}" alt="Header Gambar">
-        <div class="text-overlay">
-            <h2 class="fw-bold">{{ $storeProfile->title }}</h2>
-            <p>{{ $storeProfile->header_description }}</p>
+    <div class="custom-header-banner">
+        @if($storeProfile->header_image)
+            <img src="{{ asset('storage/' . $storeProfile->header_image) }}" alt="Header Toko {{ $storeProfile->title ?? '' }}" class="banner-image-background">
+        @endif
+        <div class="banner-text-content">
+            <h2 class="fw-bold">{{ $storeProfile->title ?? 'Nama Toko Anda' }}</h2>
+            <p>{{ $storeProfile->header_description ?? 'Deskripsi singkat mengenai usaha dan produk unggulan toko Anda.' }}</p>
         </div>
     </div>
 
     {{-- Gambar Toko dan Deskripsi --}}
-    <div class="store-section">
-        <div class="store-image">
-            <img src="{{ asset('storage/' . $storeProfile->store_image) }}" alt="Gambar Toko">
+    <div class="custom-store-section">
+        <div class="custom-store-image-wrapper">
+            {{-- Pastikan path gambar store_image benar --}}
+            <img src="{{ asset('storage/' . $storeProfile->store_image) }}" alt="Foto Toko {{ $storeProfile->title ?? '' }}">
         </div>
-        <div class="store-description">
-            <h3>Apa Itu Toko Bintang Serasi?</h3>
-            <p>{{ $storeProfile->main_description }}</p>
+        <div class="custom-store-description-wrapper">
+            <h3>Apa itu {{ $storeProfile->title ?? 'Toko Kami' }} ?</h3>
+            <p>{{ $storeProfile->main_description ?? 'Penjelasan detail mengenai toko Anda, lokasi, jenis produk yang dijual, keunggulan, dan informasi lain yang relevan untuk pelanggan.' }}</p>
+            {{-- Anda bisa menambahkan paragraf lain di sini jika $storeProfile->main_description terlalu panjang atau ingin dipecah --}}
         </div>
     </div>
 
-    {{-- Informasi Lanjutan
-<div class="info-section text-center">
-    <h4 class="fw-bold mb-4">Informasi Lanjutan :</h4>
-    <div class="info-cards d-flex justify-content-center flex-wrap gap-4">
-        <div class="info-card">
-            <h6><strong>No. Telepon :</strong></h6>
-            <p>0812-6466-7712</p>
-        </div>
-        <div class="info-card">
-            <h6><strong>Kode Pos :</strong></h6>
-            <p>22311</p>
-        </div>
-        <div class="info-card">
-            <h6><strong>Waktu Operasional :</strong></h6>
-            <p>Senin - Sabtu : 08.00 - 20.00<br>Minggu : 12.00 - 20.00</p>
-        </div>
-    </div>
-</div> --}}
-
+    {{-- Bagian Info Cards telah dihapus --}}
 
 </div>
 @endsection
