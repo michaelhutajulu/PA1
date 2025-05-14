@@ -3,6 +3,18 @@
 @section('content')
 <div class="container mt-4 position-relative">
 
+    {{-- 👇 ***** HAPUS ATAU KOMENTARI BLOK NOTIFIKASI INI ***** 👇 --}}
+    {{--
+    @if (session('status'))
+        <div class="alert alert-success alert-dismissible fade show fixed-top m-3" role="alert" id="status-notification" style="z-index: 1056;">
+            {{ session('status') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    --}}
+    {{-- 👆 ***** AKHIR BLOK YANG DIHAPUS/DIKOMENTARI ***** 👆 --}}
+
+
     {{-- Banner --}}
     <div class="position-relative mb-5">
         <img src="{{ asset('storage/dashboard/banner.jpg') }}"
@@ -30,7 +42,6 @@
                     </div>
                     <div class="card-body text-center">
                         <h4 class="card-title fw-bold mb-2">{{ $product->name }}</h4>
-                        {{-- MODIFIKASI HARGA PRODUK (tambah warna biru) --}}
                         <h5 class="mb-0 text-primary">Rp {{ number_format($product->price, 0, ',', '.') }}</h5>
                     </div>
                 </div>
@@ -53,7 +64,6 @@
                     </div>
                     <div class="card-body text-center">
                         <h4 class="card-title fw-bold mb-2">{{ $product->name }}</h4>
-                        {{-- MODIFIKASI HARGA PRODUK (tambah warna biru) --}}
                         <h5 class="mb-0 text-primary">Rp {{ number_format($product->price, 0, ',', '.') }}</h5>
                     </div>
                 </div>
@@ -64,3 +74,43 @@
 
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    // Fungsi openLoginModalCustom tidak lagi diperlukan di sini jika toggleLoginModal sudah global
+    // dan bisa diakses. Kita akan memanggil toggleLoginModal langsung.
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Tidak ada lagi logika untuk statusNotification di sini
+
+        @if (session('open_login_modal'))
+            console.log("Session 'open_login_modal' terdeteksi.");
+
+            // Panggil fungsi global untuk membuka modal
+            if (typeof window.toggleLoginModal === 'function') {
+                window.toggleLoginModal(); // Buka modal menggunakan fungsi aslinya
+                console.log("Modal login dipanggil via toggleLoginModal().");
+            } else {
+                console.error("Fungsi global 'toggleLoginModal' tidak ditemukan. Pastikan sudah termuat dari script modal.");
+                // Fallback jika toggleLoginModal tidak ada (kurang ideal)
+                const modalLoginElement = document.getElementById('modalLogin');
+                if (modalLoginElement) modalLoginElement.style.display = 'flex';
+            }
+
+            // Periksa apakah ada pesan status dari reset password
+            @if (session('status_from_password_reset'))
+                const successMessage = "{{ session('status_from_password_reset') }}";
+                console.log("Pesan sukses reset password: " + successMessage);
+                // Panggil fungsi global untuk menampilkan notifikasi di dalam modal
+                if (typeof window.showLoginModalSuccessNotification === 'function') {
+                    window.showLoginModalSuccessNotification(successMessage);
+                } else {
+                    console.error("Fungsi global 'showLoginModalSuccessNotification' tidak ditemukan.");
+                    // Fallback jika fungsi tidak ada
+                    alert(successMessage);
+                }
+            @endif
+        @endif
+    });
+</script>
+@endpush
