@@ -85,8 +85,6 @@
                                 class="text-decoration-none text-secondary hover-link">Beranda</a></li>
                         <li class="mb-2"><a href="/katalog"
                                 class="text-decoration-none text-secondary hover-link">Katalog</a></li>
-                        <li class="mb-2"><a href="/favorit"
-                                class="text-decoration-none text-secondary hover-link">Favorit</a></li>
                         <li><a href="/profil-toko" class="text-decoration-none text-secondary hover-link">Profil
                                 Toko</a></li>
                     </ul>
@@ -96,11 +94,17 @@
                 <div class="col-md-4 mb-4 mb-md-0 text-center">
                     <h3 class="mb-4 fw-bold" style="color: #284593;">Terhubung dengan kami</h3>
                     <div class="d-flex justify-content-center gap-4">
+                        {{-- Ikon Instagram --}}
                         <a href="#" class="social-icon">
                             <i class="bi bi-instagram fs-2"></i>
                         </a>
+                        {{-- Ikon Facebook --}}
                         <a href="#" class="social-icon">
                             <i class="bi bi-facebook fs-2"></i>
+                        </a>
+                        {{-- Ikon WhatsApp --}}
+                        <a href="https://wa.me/6281264667712" class="social-icon" target="_blank" rel="noopener noreferrer">
+                            <i class="bi bi-whatsapp fs-2"></i>
                         </a>
                     </div>
                 </div>
@@ -115,7 +119,7 @@
                     <p id="status-operasional" class="fw-semibold mt-2" style="color: #284593;"></p>
 
                     <p class="fw-semibold mt-4" style="color: #284593;">No. Telepon</p>
-                    <p>0812-6466-7712</p>
+                    <p>+62 812-6466-7712</p>
                 </div>
             </div>
         </div>
