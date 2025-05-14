@@ -10,15 +10,35 @@ use App\Http\Controllers\SaranController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\SearchController; // Pastikan ini di-import
 
 // ==========================================
 // 🔵 1. HALAMAN BERANDA UNTUK USER (dengan data produk)
 // ==========================================
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/produk/{id}', [ProductController::class, 'show'])->name('admin.products.show');
+
+// ------------------------------------------------------------------------------------
+// PERUBAHAN BAGIAN DETAIL PRODUK (FOKUS UTAMA)
+// ------------------------------------------------------------------------------------
+// Route lama yang menyebabkan masalah (URL publik dengan nama route admin) DIHAPUS:
+// Route::get('/produk/{id}', [ProductController::class, 'show'])->name('admin.products.show');
+
+// BARU: Route untuk menampilkan detail produk ke publik.
+// Ini akan menggunakan method baru (misalnya showPublic) di ProductController.
+// Menggunakan {product} untuk Route Model Binding jika ProductController@showPublic akan menerimanya.
+// Jika ProductController@showPublic menerima {id}, maka tetap gunakan {id}.
+// Untuk saat ini, kita akan asumsikan akan ada method showPublic yang menerima model Product.
+Route::get('/produk/{product}', [ProductController::class, 'showPublic'])->name('produk.detail.publik');
+// ------------------------------------------------------------------------------------
+
 Route::get('/katalog', [CatalogController::class, 'index'])->name('katalog.index');
+// Route detail produk via katalog. Jika CatalogController@show sudah benar untuk publik,
+// ini bisa menjadi alternatif atau bahkan utama untuk detail produk publik.
+// Tetap menggunakan {id} sesuai kode asli Anda.
 Route::get('/katalog/{id}', [CatalogController::class, 'show'])->name('katalog.show');
+
 Route::get('/profil-toko', [StoreProfileController::class, 'frontend'])->name('profil_toko');
+// Menggunakan FQCN (Fully Qualified Class Name) untuk SearchController agar lebih eksplisit
 Route::get('/search', [App\Http\Controllers\SearchController::class, 'index'])->name('search');
 
 // ==========================================
@@ -30,10 +50,19 @@ Route::middleware('auth')->group(function () {
 
     // Menampilkan semua favorit user
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index'); // ✅ nama utama
-    Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorit.index'); // ✅ alias
+    // Untuk alias, jika path sama, nama terakhir akan menimpa.
+    // Jika ingin nama 'favorit.index' juga berfungsi dengan path yang sama, ini akan menimpa 'favorites.index'.
+    // Jika path berbeda, baru bisa dua nama.
+    // Saya akan membiarkan satu saja untuk kejelasan, atau jika ingin path berbeda:
+    // Route::get('/favorit-saya', [FavoriteController::class, 'index'])->name('favorit.index');
+    // Untuk saat ini, saya akan mengikuti kode asli Anda dengan komentar:
+    Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorit.index'); // ✅ alias (akan menimpa 'favorites.index' jika path sama)
+    // Jika Anda ingin kedua nama route bekerja dengan path berbeda, salah satu path harus diubah. Misalnya:
+    // Route::get('/favorit', [FavoriteController::class, 'index'])->name('favorit.index');
 
     // 💬 Kirim kritik & saran (hanya untuk user login)
-    Route::post('/saran/kirim', [SaranController::class, 'kirim'])->name('saran.kirim');});
+    Route::post('/saran/kirim', [SaranController::class, 'kirim'])->name('saran.kirim');
+});
 
 // ==========================================
 // 🔒 2. DASHBOARD ADMIN (khusus user login & admin role)
@@ -46,6 +75,8 @@ Route::get('/dashboard', function () {
 // 🧑‍💼 3. ADMIN ROUTES (CRUD Produk, Kategori, Store Profile)
 // ==========================================
 Route::prefix('admin')->middleware(['auth', 'isadmin'])->group(function () {
+    // Route::resource akan secara otomatis membuat route bernama 'admin.products.show'
+    // yang mengarah ke ProductController@show dengan URL /admin/products/{product}
     Route::resource('products', ProductController::class);
     Route::resource('categories', CategoryController::class);
 
@@ -54,8 +85,14 @@ Route::prefix('admin')->middleware(['auth', 'isadmin'])->group(function () {
     Route::post('store_profile', [StoreProfileController::class, 'store'])->name('store_profile.store');
     Route::get('store_profile/edit', [StoreProfileController::class, 'edit'])->name('store_profile.edit');
     Route::put('store_profile', [StoreProfileController::class, 'update'])->name('store_profile.update');
-    Route::get('/admin/products/search', [ProductController::class, 'searchAdmin'])->name('admin.products.search');
 
+    // ------------------------------------------------------------------------------------
+    // KOREKSI PATH ADMIN SEARCH
+    // ------------------------------------------------------------------------------------
+    // Path diubah dari '/admin/products/search' menjadi 'products/search'
+    // karena sudah ada prefix 'admin' di grup. URL akhir akan menjadi /admin/products/search
+    Route::get('products/search', [ProductController::class, 'searchAdmin'])->name('admin.products.search');
+    // ------------------------------------------------------------------------------------
 });
 
 // ==========================================

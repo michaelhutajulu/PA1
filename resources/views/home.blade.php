@@ -33,7 +33,10 @@
     <div class="row justify-content-center mb-5">
         @foreach($featuredProducts as $product)
         <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-            <a href="{{ route('admin.products.show', $product->id) }}" class="text-decoration-none text-dark">
+            {{-- ========================================================== --}}
+            {{-- PERUBAHAN DI SINI --}}
+            {{-- ========================================================== --}}
+            <a href="{{ route('produk.detail.publik', $product->id) }}" class="text-decoration-none text-dark">
                 <div class="featured-card h-100 fade-in">
                     <div class="image-container">
                         <img src="{{ asset('storage/' . $product->image) }}"
@@ -55,7 +58,10 @@
     <div class="d-flex flex-wrap justify-content-center mx-n2">
     @foreach($productsPerCategory as $product)
         <div class="col-6 col-sm-6 col-md-4 col-lg-3 mb-4 px-2 d-flex">
-            <a href="{{ route('admin.products.show', $product->id) }}" class="text-decoration-none text-dark w-100">
+            {{-- ========================================================== --}}
+            {{-- PERUBAHAN DI SINI --}}
+            {{-- ========================================================== --}}
+            <a href="{{ route('produk.detail.publik', $product->id) }}" class="text-decoration-none text-dark w-100">
                 <div class="featured-card h-100 fade-in">
                     <div class="image-container">
                         <img src="{{ asset('storage/' . $product->image) }}"

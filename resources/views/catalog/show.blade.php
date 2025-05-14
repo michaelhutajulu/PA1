@@ -11,7 +11,10 @@
             <div class="col-6 col-sm-4 col-md-3 mb-4 px-2 d-flex">
                 {{-- Pastikan link ini sesuai, mungkin ke halaman detail produk user, bukan admin? --}}
                 {{-- Jika ada route 'product.show.user', gunakan itu --}}
-                <a href="{{ route('admin.products.show', $product->id) }}" class="text-decoration-none text-dark w-100">
+                {{-- ========================================================== --}}
+                {{-- PERUBAHAN UTAMA ADA DI HREF INI --}}
+                {{-- ========================================================== --}}
+                <a href="{{ route('produk.detail.publik', $product->id) }}" class="text-decoration-none text-dark w-100">
                     <div class="product-card h-100">
                         <div class="card-image-container">
                             @if($product->image)

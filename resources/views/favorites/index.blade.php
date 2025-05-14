@@ -12,7 +12,10 @@
     <div class="d-flex flex-wrap justify-content-center mx-n2" id="favorites-container">
         @foreach($favorites as $product)
             <div class="col-6 col-sm-4 col-md-3 mb-4 px-2 d-flex">
-                <a href="{{ route('admin.products.show', $product->id) }}" 
+                {{-- ========================================================== --}}
+                {{-- PERUBAHAN UTAMA ADA DI HREF INI --}}
+                {{-- ========================================================== --}}
+                <a href="{{ route('produk.detail.publik', $product->id) }}" 
                    onclick="sessionStorage.setItem('back_url', window.location.href)" 
                    class="text-decoration-none text-dark w-100">
                     <div class="card h-100 border-0 custom-card product-card">
