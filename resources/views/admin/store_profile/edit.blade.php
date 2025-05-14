@@ -3,8 +3,12 @@
 @section('header', 'Edit Profil Toko')
 
 @section('content-admin')
-    <form action="{{ route('store_profile.update', $storeProfile->id) }}" method="POST" enctype="multipart/form-data">
-        @csrf @method('PUT')
+    {{-- ========================================================== --}}
+    {{-- PERUBAHAN DI SINI: store_profile.update menjadi admin.store_profile.update --}}
+    {{-- ========================================================== --}}
+    <form action="{{ route('admin.store_profile.update', $storeProfile->id) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
 
         <div class="form-group">
             <label>Judul</label>
@@ -38,6 +42,9 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{{ route('store_profile.index') }}" class="btn btn-secondary">Batal</a>
+        {{-- ========================================================== --}}
+        {{-- PERUBAHAN DI SINI JUGA: store_profile.index menjadi admin.store_profile.index --}}
+        {{-- ========================================================== --}}
+        <a href="{{ route('admin.store_profile.index') }}" class="btn btn-secondary">Batal</a>
     </form>
 @endsection

@@ -36,7 +36,10 @@ class CategoryController extends Controller
             'user_id' => auth()->id(), // Set the user_id to the logged-in user's ID
         ]);
 
-        return redirect()->route('categories.index')->with('success', 'Kategori berhasil ditambahkan.');
+        // ==========================================================
+        // PERUBAHAN DI SINI
+        // ==========================================================
+        return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil ditambahkan.');
     }
 
     public function edit(Category $category)
@@ -48,12 +51,14 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'image|mimes:jpeg,png,jpg|max:2048', // Sebaiknya 'nullable' jika gambar tidak wajib diupdate
         ]);
 
         // If the image has been updated, delete the old one and store the new one
         if ($request->hasFile('image')) {
-            Storage::disk('public')->delete($category->image);
+            if ($category->image) { // Tambahkan pengecekan jika gambar lama ada sebelum dihapus
+                Storage::disk('public')->delete($category->image);
+            }
             $category->image = $request->file('image')->store('categories', 'public');
         }
 
@@ -64,15 +69,23 @@ class CategoryController extends Controller
             // 'user_id' is not necessary to update because it should not change after the category is created
         ]);
 
-        return redirect()->route('categories.index')->with('success', 'Kategori berhasil diperbarui.');
+        // ==========================================================
+        // PERUBAHAN DI SINI
+        // ==========================================================
+        return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil diperbarui.');
     }
 
     public function destroy(Category $category)
     {
         // Delete the image from storage before deleting the category
-        Storage::disk('public')->delete($category->image);
+        if ($category->image) { // Tambahkan pengecekan jika gambar ada sebelum dihapus
+            Storage::disk('public')->delete($category->image);
+        }
         $category->delete();
 
-        return redirect()->route('categories.index')->with('success', 'Kategori berhasil dihapus.');
+        // ==========================================================
+        // PERUBAHAN DI SINI
+        // ==========================================================
+        return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil dihapus.');
     }
 }

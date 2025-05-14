@@ -3,7 +3,10 @@
 @section('header', 'Tambah Produk')
 
 @section('content-admin')
-    <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+    {{-- ========================================================== --}}
+    {{-- PERUBAHAN DI SINI: products.store menjadi admin.products.store --}}
+    {{-- ========================================================== --}}
+    <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label>Nama Produk</label>
@@ -31,6 +34,9 @@
             <input type="file" name="image" class="form-control-file">
         </div>
         <button type="submit" class="btn btn-success">Simpan</button>
-        <a href="{{ route('products.index') }}" class="btn btn-secondary">Batal</a>
+        {{-- ========================================================== --}}
+        {{-- PERUBAHAN DI SINI JUGA: products.index menjadi admin.products.index --}}
+        {{-- ========================================================== --}}
+        <a href="{{ route('admin.products.index') }}" class="btn btn-secondary">Batal</a>
     </form>
 @stop

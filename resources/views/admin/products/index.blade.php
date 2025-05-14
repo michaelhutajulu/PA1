@@ -3,9 +3,13 @@
 @section('header', 'Daftar Produk')
 
 @section('content-admin')
-    <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Tambah Produk</a>
+    {{-- ========================================================== --}}
+    {{-- PERUBAHAN DI SINI: products.create menjadi admin.products.create --}}
+    {{-- ========================================================== --}}
+    <a href="{{ route('admin.products.create') }}" class="btn btn-primary mb-3">Tambah Produk</a>
 
     {{-- Search Bar untuk Admin --}}
+    {{-- Nama route 'admin.products.search' sudah benar --}}
     <form class="mb-3" role="search" action="{{ route('admin.products.search') }}" method="GET">
         <div class="input-group w-50">
             <input class="form-control rounded-start" type="search" name="query" value="{{ request('query') }}" placeholder="Cari produk...">
@@ -60,10 +64,16 @@
                         </td>
                         <td>
                             <div class="btn-group" role="group"> {{-- Kelompokkan tombol aksi --}}
-                                <a href="{{ route('products.edit', $item->id) }}" class="btn btn-warning btn-sm" title="Edit">
+                                {{-- ========================================================== --}}
+                                {{-- PERUBAHAN DI SINI: products.edit menjadi admin.products.edit --}}
+                                {{-- ========================================================== --}}
+                                <a href="{{ route('admin.products.edit', $item->id) }}" class="btn btn-warning btn-sm" title="Edit">
                                     <i class="bi bi-pencil-square"></i> Edit
                                 </a>
-                                <form action="{{ route('products.destroy', $item->id) }}" method="POST" class="d-inline">
+                                {{-- ========================================================== --}}
+                                {{-- PERUBAHAN DI SINI: products.destroy menjadi admin.products.destroy (untuk action form) --}}
+                                {{-- ========================================================== --}}
+                                <form action="{{ route('admin.products.destroy', $item->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Anda yakin ingin menghapus produk \'{{ $item->name }}\'?')" title="Hapus">

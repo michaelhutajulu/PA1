@@ -3,8 +3,12 @@
 @section('header', 'Edit Produk')
 
 @section('content-admin')
-    <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
-        @csrf @method('PUT')
+    {{-- ========================================================== --}}
+    {{-- PERUBAHAN UTAMA DI SINI: products.update menjadi admin.products.update --}}
+    {{-- ========================================================== --}}
+    <form action="{{ route('admin.products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
         <div class="form-group">
             <label>Nama Produk</label>
             <input type="text" name="name" class="form-control" value="{{ $product->name }}" required>
@@ -33,6 +37,9 @@
             <img src="{{ asset('storage/' . $product->image) }}" width="100">
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{{ route('products.index') }}" class="btn btn-secondary">Batal</a>
+        {{-- ========================================================== --}}
+        {{-- PERUBAHAN DI SINI JUGA: products.index menjadi admin.products.index --}}
+        {{-- ========================================================== --}}
+        <a href="{{ route('admin.products.index') }}" class="btn btn-secondary">Batal</a>
     </form>
 @stop

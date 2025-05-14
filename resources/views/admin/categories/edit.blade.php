@@ -3,8 +3,12 @@
 @section('header', 'Edit Kategori')
 
 @section('content-admin')
-    <form action="{{ route('categories.update', $category->id) }}" method="POST" enctype="multipart/form-data">
-        @csrf @method('PUT')
+    {{-- ========================================================== --}}
+    {{-- PERUBAHAN DI SINI: categories.update menjadi admin.categories.update --}}
+    {{-- ========================================================== --}}
+    <form action="{{ route('admin.categories.update', $category->id) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
         <div class="form-group">
             <label>Nama Kategori</label>
             <input type="text" name="name" class="form-control" value="{{ $category->name }}" required>
@@ -15,6 +19,9 @@
             <img src="{{ asset('storage/' . $category->image) }}" width="100">
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{{ route('categories.index') }}" class="btn btn-secondary">Batal</a>
+        {{-- ========================================================== --}}
+        {{-- PERUBAHAN DI SINI JUGA: categories.index menjadi admin.categories.index --}}
+        {{-- ========================================================== --}}
+        <a href="{{ route('admin.categories.index') }}" class="btn btn-secondary">Batal</a>
     </form>
 @stop

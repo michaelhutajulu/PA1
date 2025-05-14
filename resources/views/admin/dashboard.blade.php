@@ -18,7 +18,10 @@
                 <div class="icon">
                     <i class="fas fa-box"></i>
                 </div>
-                <a href="{{ route('products.index') }}" class="small-box-footer">Lihat Produk <i class="fas fa-arrow-circle-right"></i></a>
+                {{-- ========================================================== --}}
+                {{-- PERUBAHAN DI SINI: products.index menjadi admin.products.index --}}
+                {{-- ========================================================== --}}
+                <a href="{{ route('admin.products.index') }}" class="small-box-footer">Lihat Produk <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
 
@@ -32,7 +35,10 @@
                 <div class="icon">
                     <i class="fas fa-tags"></i>
                 </div>
-                <a href="{{ route('categories.index') }}" class="small-box-footer">Lihat Kategori <i class="fas fa-arrow-circle-right"></i></a>
+                {{-- ========================================================== --}}
+                {{-- PERUBAHAN DI SINI: categories.index menjadi admin.categories.index --}}
+                {{-- ========================================================== --}}
+                <a href="{{ route('admin.categories.index') }}" class="small-box-footer">Lihat Kategori <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
     </div>

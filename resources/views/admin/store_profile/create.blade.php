@@ -4,7 +4,10 @@
 <div class="container">
     <h1 class="mb-4">Tambah Profil Toko</h1>
 
-    <form action="{{ route('store_profile.store') }}" method="POST" enctype="multipart/form-data">
+    {{-- ========================================================== --}}
+    {{-- PERUBAHAN DI SINI: store_profile.store menjadi admin.store_profile.store --}}
+    {{-- ========================================================== --}}
+    <form action="{{ route('admin.store_profile.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
         <div class="mb-3">
@@ -33,6 +36,8 @@
         </div>
 
         <button type="submit" class="btn btn-success">Simpan</button>
+        {{-- Anda mungkin ingin menambahkan tombol Batal di sini yang mengarah ke admin.store_profile.index --}}
+        {{-- <a href="{{ route('admin.store_profile.index') }}" class="btn btn-secondary">Batal</a> --}}
     </form>
 </div>
 @endsection

@@ -37,13 +37,19 @@
                 <p>{{ $storeProfile->main_description }}</p>
 
                 {{-- Tombol Edit --}}
-                <a href="{{ route('store_profile.edit') }}" class="btn btn-warning mt-2">Edit Profil</a>
+                {{-- ========================================================== --}}
+                {{-- PERUBAHAN DI SINI: store_profile.edit menjadi admin.store_profile.edit --}}
+                {{-- ========================================================== --}}
+                <a href="{{ route('admin.store_profile.edit') }}" class="btn btn-warning mt-2">Edit Profil</a>
             </div>
         </div>
     @else
         {{-- Jika belum ada data --}}
         <div class="alert alert-info">Belum ada data profil toko.</div>
-        <a href="{{ route('store_profile.create') }}" class="btn btn-primary">Tambah Profil</a>
+        {{-- ========================================================== --}}
+        {{-- PERUBAHAN DI SINI: store_profile.create menjadi admin.store_profile.create --}}
+        {{-- ========================================================== --}}
+        <a href="{{ route('admin.store_profile.create') }}" class="btn btn-primary">Tambah Profil</a>
     @endif
 </div>
 @endsection
