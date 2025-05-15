@@ -44,7 +44,7 @@
     </div>
 
     {{-- Produk Per Kategori (BAGIAN INI TETAP SAMA SEPERTI KODE ASLI ANDA) --}}
-    <h4 class="fw-bold text-center mb-4">Produks</h4>
+    <h4 class="fw-bold text-center mb-4">Produk</h4>
     <div class="d-flex flex-wrap justify-content-center mx-n2">
     @foreach($productsPerCategory as $product)
         <div class="col-6 col-sm-6 col-md-4 col-lg-3 mb-4 px-2 d-flex">
