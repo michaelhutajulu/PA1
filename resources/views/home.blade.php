@@ -107,7 +107,6 @@
 </style>
 @endpush
 
-{{-- SCRIPT TETAP SAMA SEPERTI SEBELUMNYA --}}
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
