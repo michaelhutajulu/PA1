@@ -5,7 +5,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\StoreProfileController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HomeController; // Pastikan ini di-import
 use App\Http\Controllers\SaranController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\FavoriteController;
@@ -16,6 +16,11 @@ use App\Http\Controllers\SearchController; // Pastikan ini di-import
 // 🔵 1. HALAMAN BERANDA UNTUK USER (dengan data produk)
 // ==========================================
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// --- 👇 PERUBAHAN: Route untuk AJAX 4 Produk Acak 👇 ---
+// Route::get('/get-random-product-highlight', [HomeController::class, 'getRandomProductAjax'])->name('ajax.random_product'); // <-- DIKOMENTARI/HAPUS KARENA DIGANTI
+Route::get('/get-four-random-products', [HomeController::class, 'getFourRandomProductsAjax'])->name('ajax.four_random_products');
+// --- 👆 AKHIR PERUBAHAN 👆 ---
 
 // BARU: Route untuk menampilkan detail produk ke publik.
 Route::get('/produk/{product}', [ProductController::class, 'showPublic'])->name('produk.detail.publik');
