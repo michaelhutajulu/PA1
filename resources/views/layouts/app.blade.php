@@ -16,18 +16,7 @@
     <style>
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* Font modern & bersih */
-    /* Gradien vertikal halus */
-    background: linear-gradient(to bottom,
-        /* Peach/Apricot Sangat Pucat di Atas */
-        rgba(255, 224, 189, 0.4) 0%, /* #ffe0bd dengan opacity 40% */
-
-        /* Kuning Mentega/Krim Sangat Pucat di Tengah */
-        rgba(255, 248, 220, 0.5) 40%, /* #fff8dc dengan opacity 50% */
-
-        /* Off-white/Putih Gading di Bawah */
-        #fffdf9 80%,
-        #fefcfb 100%
-    );
+    background:rgb(233, 233, 233); /* Warna putih polos */
     color: #5D4037; /* Coklat tua yang hangat untuk teks utama */
     margin: 0;
     padding: 0;
@@ -36,6 +25,7 @@ body {
     overflow-x: hidden;
     line-height: 1.6; /* Keterbacaan yang baik */
 }
+
 
     /* Modal Login dan Register */
     .modal-login-overlay {
