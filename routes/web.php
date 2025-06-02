@@ -55,6 +55,9 @@ Route::get('/dashboard', function () {
 // PERUBAHAN UTAMA ADA DI BARIS INI: Menambahkan ->name('admin.') pada grup
 // ===================================================================================
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'isadmin'])->group(function () {
+    
+    // Route search admin, namanya 'admin.products.search' sudah sesuai dengan prefix grup
+    Route::get('products/search', [ProductController::class, 'searchAdmin'])->name('products.search');
     // Dengan ->name('admin.'), Route::resource akan menghasilkan:
     // admin.products.index, admin.products.create, admin.products.store,
     // admin.products.show, admin.products.edit, admin.products.update, admin.products.destroy
