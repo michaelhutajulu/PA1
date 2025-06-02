@@ -334,11 +334,6 @@ return [
         'url'  => 'admin/store_profile',
     ],
 
-    [
-        'text' => 'Website',
-        'url'  => '/',
-        'icon' => 'fas fa-globe',
-    ],
     
     
 

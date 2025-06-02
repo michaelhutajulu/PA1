@@ -131,7 +131,7 @@
 <nav class="navbar navbar-expand-lg shadow-sm sticky-top" style="background-color: #0d3b66;">
     <div class="container d-flex align-items-center">
         {{-- Kiri: Logo --}}
-        <a class="navbar-brand text-white fw-bold d-flex align-items-center me-4" href="{{ route('home') }}">
+        <a class="navbar-brand text-white fw-bold d-flex align-items-center me-4">
             <div class="rounded-circle me-2 d-flex align-items-center justify-content-center"
                  style="height: 38px; width: 38px;">
                 <img src="{{ asset('logo2.png') }}" alt="Logo Bintang Serasi"
