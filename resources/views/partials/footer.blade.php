@@ -99,12 +99,8 @@
                 <div class="col-md-4 mb-4 mb-md-0 text-center">
                     <h3 class="mb-4 fw-bold" style="color: #284593;">Terhubung dengan kami</h3>
                     <div class="d-flex justify-content-center gap-4">
-                        {{-- Ikon Instagram --}}
-                        <a href="#" class="social-icon">
-                            <i class="bi bi-instagram fs-2"></i>
-                        </a>
                         {{-- Ikon Facebook --}}
-                        <a href="#" class="social-icon">
+                        <a href="https://www.facebook.com/share/1Ac2LDm2ka/" class="social-icon">
                             <i class="bi bi-facebook fs-2"></i>
                         </a>
                         {{-- Ikon WhatsApp --}}
