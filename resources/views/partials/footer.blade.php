@@ -76,8 +76,13 @@
             <div class="row g-4">
                 <!-- Navbar bawah -->
                 <div class="col-md-4 mb-4 mb-md-0">
-                    <div class="d-flex align-items-center mb-3">
-                        <span class="me-2 fs-4" style="color: #284593;">⭐</span>
+                        <div class="d-flex align-items-center mb-3">
+                        {{-- Mengganti span dengan emoji menjadi img dengan logo SVG --}}
+                        <img src="{{ asset('logo.svg') }}" alt="Logo Bintang Serasi" class="me-2"
+                             style="height: 1.5rem; width: auto; object-fit: contain; vertical-align: middle;">
+                        {{-- Alternatif jika Anda lebih suka pixel (dengan asumsi 1rem = 16px): --}}
+                        {{-- style="height: 24px; width: auto; object-fit: contain; vertical-align: middle;" --}}
+
                         <h3 class="mb-0 fw-bold" style="color: #284593;">Bintang Serasi</h3>
                     </div>
                     <ul class="list-unstyled">
