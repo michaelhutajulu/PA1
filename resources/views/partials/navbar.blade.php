@@ -169,7 +169,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white fw-bold hover-underline"
-                            href="{{ route('katalog.index') }}">KATALOG</a>
+                            href="{{ route('katalog.index') }}">KATEGORI</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white fw-bold hover-underline" href="{{ route('profil_toko') }}">PROFIL

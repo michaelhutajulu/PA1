@@ -12,6 +12,9 @@
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
+    <!-- Pemanggilan css untuk slider di beranda -->
+    @stack('styles')
+
     <!-- Custom CSS -->
     <style>
 body {

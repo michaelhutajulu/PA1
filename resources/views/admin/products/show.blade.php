@@ -75,22 +75,7 @@
         line-height: 1.6;
         /* Styling scrollbar (opsional, butuh prefix browser) */
     }
-    .product-description-box::-webkit-scrollbar {
-        width: 8px;
-    }
-    .product-description-box::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 10px;
-    }
-    .product-description-box::-webkit-scrollbar-thumb {
-        background: #c1c1c1;
-        border-radius: 10px;
-    }
-    .product-description-box::-webkit-scrollbar-thumb:hover {
-        background: #a1a1a1;
-    }
-
-
+    
     /* Area Aksi (Favorit) */
     .favorite-action-area {
         margin-top: 2rem !important; /* Jarak atas yang lebih jelas */

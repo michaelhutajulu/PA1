@@ -65,31 +65,14 @@
     .product-description-box {
         /* Menggunakan class untuk styling yang lebih rapi daripada inline */
         padding: 1rem 1.25rem; /* Padding yang lebih konsisten dan lega */
-        max-height: 220px; /* Sedikit lebih tinggi */
-        overflow-y: auto;
+            overflow-y: auto;
         white-space: pre-line;
         background-color: #fdfdfd; /* Background yang sangat terang, hampir putih */
         border: 1px solid #e9ecef; /* Border yang lebih halus */
         border-radius: 8px; /* Radius sudut untuk box */
         color: #555; /* Warna teks deskripsi */
         line-height: 1.6;
-        /* Styling scrollbar (opsional, butuh prefix browser) */
     }
-    .product-description-box::-webkit-scrollbar {
-        width: 8px;
-    }
-    .product-description-box::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 10px;
-    }
-    .product-description-box::-webkit-scrollbar-thumb {
-        background: #c1c1c1;
-        border-radius: 10px;
-    }
-    .product-description-box::-webkit-scrollbar-thumb:hover {
-        background: #a1a1a1;
-    }
-
 
     /* Area Aksi (Favorit) */
     .favorite-action-area {
